@@ -1,0 +1,57 @@
+﻿@page "/weather"
+@inject HttpClient Http
+
+<НазваСторінки>Погода</НазваСторінки>
+
+<h1>Погода</h1>
+
+<p>Цей компонент демонструє витягування даних із сервера.</p>
+
+@if (прогнози == null)
+{
+    <p><em>Завантажуємо...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Темп. (Ц)</th>
+                <th>Темп. (Ф)</th>
+                <th>Опис</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var прогноз in прогнози)
+            {
+                <tr>
+                    <td>@прогноз.Дата.ToShortDateString()</td>
+                    <td>@прогноз.ТемператураЦ</td>
+                    <td>@прогноз.ТемператураФ</td>
+                    <td>@прогноз.Опис</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private ПрогнозПогоди[]? прогнози;
+
+    protected override async Task OnInitializedAsync()
+    {
+        прогнози = await Http.GetFromJsonAsync<ПрогнозПогоди[]>("дані-для-приклада/погода.json");
+    }
+
+    public class ПрогнозПогоди
+    {
+        public DateOnly Дата { get; set; }
+
+        public int ТемператураЦ { get; set; }
+
+        public string? Опис { get; set; }
+
+        public int ТемператураФ => 32 + (int)(ТемператураЦ / 0.5556);
+    }
+}
