@@ -2,6 +2,342 @@
 
 <НазваСторінки>Головна</НазваСторінки>
 
-<h1>Привіт, світ!</h1>
+<h1>
+    FLOW-MATIC CODE
+    FOR SAMPLE PROBLEM 1
+</h1>
 
-Ласкаво просимо до вашої нової програми.
+<code>
+    <pre>
+(0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ; HSP D .
+(1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 10 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
+(2) TRANSFER A TO D .
+(3) WRITE-ITEM D .
+(4) JUMP TO OPERATION 8 .
+(5) TRINSFER A TO C .
+(6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) .
+(7) WRITE-ITEM C .
+(8) READ-ITEM A ; IF END OF DATA GO TO OPERATION 14 .
+(9) JUMP TO OPERATION 1 .
+(10) READ-ITEM B ; IF END OF DATA GO TO OPERATION 14 .
+(11) JUMP TO OPERATION 1 .
+(12) SET OPERATION 9 TO GO TO OPERATION 2 .
+(13) JUMP TO OPERATION 2 .
+(14) TEST PRODUCT-NO (B) AGAINST ZZZZZZZZZZZZ ; IF EQUAL GO TO OPERATION 16; OTHERWISE GO TO OPERATION 15 .
+(15) REWIND B .
+(16) CLOSE-OUT FILES C, D .
+(17) STOP. (END)
+    </pre>
+</code>
+
+
+<h1>
+    FLOW-MATIC CODE
+    FOR SAMPLE PROBLEM 2
+</h1>
+
+<code>
+    <pre>
+(0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ERROR FILE-E ; HSP D, E .
+(1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 14 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
+(2) TRANSFER A TO D .
+(3) WRITE-ITEM D .
+(4) JUMP TO OPERATION 8 .
+(5) TRINSFER A TO C .
+(6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) .
+(7) WRITE-ITEM C .
+(8) MOVE PRODUCT-NO (A) TO PRODUCT-NO (W) .
+(9) READ-ITEM A ; IF END OF DATA GO TO OPERATION 16 .
+(10) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (W); IF EQUAL GO TO OPERATION 11; OTHERWISE GO TO OPERATION 1 .
+(11) TRANSFER A TO E .
+(12) WRITE-ITEM E .
+(13) JUMP TO OPERATION 9 .
+(14) READ-ITEM B ; IF END OF DATA GO TO OPERATION 1 .
+(15) JUMP TO OPERATION 1 .
+(16) TEST PRODUCT-NO (B) AGAINST ZZZZZZZZZZZZ; IF EQUAL GO TO OPERATION 16; OTHERWISE GO TO OPERATION 18 .
+(17) REWIND B .
+(18) CLOSE-OUT FILES C, D, E .
+(19) STOP. (END)
+    </pre>
+</code>
+
+<h1>
+    FLOW-MATIC CODE
+    FOR SAMPLE PROBLEM 3
+</h1>
+
+<code>
+    <pre>
+(0) INPUT INVENTORY FllE-A PRICE FllE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FllE-D ; HSP D . 
+(I) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION  21 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 . 
+(2) TRANSFER A TO D . 
+(3) SET OPERATION 13 TO GO TO OPERATION 18 . 
+(4) JUMP TO OPERATION 8 . 
+(5) TRANSFER A TO C . 
+(6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) . 
+(7) SET OPERATION 13 TO GO TO OPERATION 14 . 
+(8) MOVE PRODUCT-NO (A) TO PRODUCT-NO (W) ; QUANTITY (A) TO QUANTITY (W).
+(9) READ-ITEM A ; IF END OF DATA GO TO OPERATION 23 .
+(10) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (W) ; IF EQUAL GO TO OPERATION 11 ; OTHERWISE GO TO OPERATION 13 .
+(11) X-I ADD QUANTITY (A) TO STORED QUANTITY (W) . 
+(12) JUMP TO OPERATION 9 . 
+(13) JUMP TO OPERATION 14 . 
+(I4) MOVE QUANTITY (W) TO QUANTITY (C) , 
+(15) X-I COMPUTE EXTENDED PRICE AND INSERT IN C ITEM.
+(16) WRITE-ITEM C . 
+(I7) JUMP TO OPERATION 1 .
+(18) MOVE QUANTITY (W) TO QUANTITY (D) .
+(19) WRITE-ITEM D .
+(20) JUMP TO OPERATION 17 .
+(21) READ-ITEM B ; IF END OF DATA GO TO OPERATION 1 .
+(22) JUMP TO OPERATION 1 .
+(23) EXECUTE OPERATION 13 THROUGH OPERATION 17 . 
+(24) TEST PRODUCT-NO (8) AGAINST ZZZZZZZZZZZZ ; IF EQUAL GO TO OPERATION 26 ; OTHERWISE GO TO OPERATION 25 .
+(25) REWIND B .
+(26) CLOSE-OUT FILES C , D .
+(27) STOP. (END) 
+    </pre>
+</code>
+
+<h1>Syntax</h1>
+<pre>
+1. Lower case indicates information to be supplied by the programmer.
+2. Brackets [ ] indicate options available to the programmer.
+3. h = present operation number
+   h1, h2, h3 ... = other operation numbers.
+4. f1, f2, f3 ... = file letters assigned by programmer.
+5. s1, s2, s3, ... = servo numbers assigned by programmer.
+6. field-name = name assigned by programmer to data field. e.g., STOCK-NUMBER
+7. file-name = name assigned by programmer to data file, e.g., INVENTORY
+8. Spaces are significant. There it's not possible used _ for distinguish space from formatting.
+</pre>
+
+<h2>
+    CLOSE-OUT
+</h2>
+
+<code>
+    <pre>
+(h) CLOSE-OUT (FILE|FILES) f1 [f2 f3 ..... fn ].
+    </pre>
+</code>
+
+<h2>
+    COMPARE
+</h2>
+
+<code>
+    <pre>
+(h) COMPARE field-name (f1) WITH field-name (f2) ; IF EQUAL GO TO OPERATION h1 ; OTHERWISE GO TO OPERATION h2 .
+(h) COMPARE field-name (f1) WITH field-name (f2) ; IF GREATER GO TO OPERATION h1 ; OTHERWISE GO TO OPERATION h2 .
+(h) COMPARE field-name (f1) WITH field-name (f2) ; IF EQUAL GO TO OPERATION h1 ; IF GREATER GO TO OPERATION h2 ; OTHERWISE GO TO OPERATION h3 .
+(h) CQMPARE field-name (f1) WITH field-name (f2) ; IF GREATER GO TO OPERATION h1 ; IF EQUAL GO TO OPERATION h2 ; OTHERWISE GO TO OPERATION h3 .
+    </pre>
+</code>
+
+<h2>
+    EXECUTE
+</h2>
+
+<code>
+    <pre>
+(h) EXECUTE OPERATION h1 [THROUGH OPERATION h2 ].
+    </pre>
+</code>
+
+<h2>
+    INPUT
+</h2>
+
+<code>
+    <pre>
+(h) INPUT name-of-file FILE-f1 [SERVO s1 |SERVOS s1,s2 ] name-of-file FILE-f2 [SERVO s1 |SERVOS s1,s2 ]...
+; OUTPUT name-of-file FILE-f3 [SERVO s1 |SERVOS s1,s2 ] name-of-file FILE-f4 [SERVO s1 |SERVOS s1,s2 ]...
+[; PRESELECTION]
+[; HSP f1 ,f2 , ... fn ]
+[; T/C f1 ,f2 , ... fn ]
+[;RERUN [ON|WITH|FROM] OUTPUT f1 ].
+    </pre>
+</code>
+
+SPECIAL NOTES
+<ol>
+    <li>The assigned file-name may not begin with the digits FILE-.</li>
+    <li>If servo numbers are not specified, the compiler will assign them, reserving the proper servos for tapes for HSP or TIC, as stated.</li>
+    <li>
+        For a single input file, continuous reads will be provided. For two or
+        three, way input, standby coding will be provided, unless preselection is
+        specified. Up to eight way input coding will be provided in the preselection option, 
+        and up to five full-word keys may be used.
+    </li>
+    <li>
+        The normal and error print~outs which may occur in the execution of this
+        coding are self-explanatory. In addition, breakpoint 1 is used through out the coding to provide operating options. 
+        For example, if a tape label fails the check, an error print-out gives this information to the
+        operator; he may then force transfer on breakpoint 1 to proceed, if desired. In all cases where it is desired 
+        to bypass the error, the action is to force transfer on breakpoint 1.
+    </li>
+    <li>
+        If it is desired to begin the problem over, the operating instructions
+        are:
+        <ul>
+            <li>a - Rewind all tapes except the instruction tape.</li>
+            <li>b - Clear C and rI.</li>
+            <li>c - No transfer on Breakpoint 2.</li>
+        </ul>
+        This coding is always provided.
+    </li>
+    <li>
+        If rerun cOding has been requested, the operating instructions are:
+        <ul>
+            <li>a - Rewind all tapes except the instruction tape.</li>
+            <li>b - Clear C and rI.</li>
+            <li>c - Force transfer on Breakpoint 2.</li>
+        </ul>
+        The problem will be resumed from the last completed output reel, as specified in the input statement.
+    </li>
+</ol>
+
+<h2>
+    JUMP
+</h2>
+
+<code>
+    <pre>
+(h) JUMP TO OPERATION h1 .
+    </pre>
+</code>
+
+<h2>
+    MOVE
+</h2>
+
+<code>
+    <pre>
+(h) MOVE field-name (f1) TO field-name (f2) [, field-name (f3) ..., field-name (fn) ]
+[; TO field-name (f1') [, field-name (f2') ..., field-name (fn') ]]
+    </pre>
+</code>
+
+<h2>
+    READ-ITEM
+</h2>
+
+<code>
+    <pre>
+(h) READ-ITEM f1 [; IF END OF DATA GO TO OPERATION h1 ].
+    </pre>
+</code>
+
+SPECIAL NOTES
+<ol>
+    <li>
+        Each input file mentioned in the INPUT statement must have at least one
+        READ-ITEM operation.
+    </li>
+    <li>
+        At least one READ-ITEM operation, for each input file, must include the
+        optional phrase, IF END OF DATA ..... .
+    </li>
+    <li>
+        If two or more READ-ITEM operations, for a single input file, include the
+        IF END OF DATA ....... option, the operation numbers, h1 must be identical.
+    </li>
+</ol>
+
+<h2>
+    REWIND
+</h2>
+
+<code>
+    <pre>
+(h) REWIND f1 [,f2 ,f3 ...,fn ].
+    </pre>
+</code>
+
+<h2>
+    SET
+</h2>
+
+<code>
+    <pre>
+(h) SET OPERATION h1 TO GO TO OPERATION h2 [, OPERATION h3 TO GO TO OPERATION h4 ..., OPERATION h5 TO GO TO OPERATION h6 ].
+    </pre>
+</code>
+
+<h2>
+    STOP
+</h2>
+
+<code>
+    <pre>
+(h) STOP. (END)
+    </pre>
+</code>
+
+SPECIAL NOTES
+<ol>
+    <li>
+        The stop operation must be. the highest numbered operation in the problem,
+        and it must be followed by the word END in parentheses.
+    </li>
+</ol>
+
+<h2>
+    TEST
+</h2>
+
+<code>
+    <pre>
+(h) TEST field-name (f1) AGAINST test-value ; IF GREATER GO TO OPERATION h1 ; IF EQUAL GO TO OPERATION h2 [; AGAINST ... ]; OTHERWISE GO TO OPERATION h3 .
+(h) TEST field-name (f1) AGAINST test-value ; IF GREATER GO TO OPERATION h1 ; IF LESS GO TO OPERATION h2 [; AGAINST ... ]; OTHERWISE GO TO OPERATION h3 .
+(h) TEST field-name (f1) AGAINST test-value ; IF UNEQUAL GO TO OPERATION h1 [; AGAINST ... ]; OTHERWISE GO TO OPERATION h2 .
+    </pre>
+</code>
+
+SPECIAL NOTES
+<ol>
+    <li>
+        The conditional phrases, IF GREATER, IF EQUAL, IF LESS, shown in Option
+        1 and 2 may appear singly or in any order in combinations of two. The
+        phrase OTHERWISE must always appear, and must be written last.
+    </li>
+    <li>
+        If it is desired to use a test value of spaces or periods, the words
+        SPACE, PERIOD, SPACES, or PERIODS should be used instead of the actual
+        digits. In these cases, only one test value is acceptable. In all other
+        cases, tests against many test values may be made in one operation.
+    </li>
+</ol>
+
+
+<h2>
+    TRANSFER
+</h2>
+
+<code>
+    <pre>
+(h) TRANSFER f1 TO f2 .
+(h) TRANSFER sub-item-name IN f1 TO f2 .
+(h) TRANSFER f1 TO sub-item-name IN f2 .
+(h) TRANSFER sub-item-name IN f1 TO sub-item-name IN f2 .
+    </pre>
+</code>
+
+SPECIAL NOTES
+<ol>
+    <li>
+        Item or sub-item sizes in fi and f2 must be equal in size.
+    </li>
+</ol>
+
+
+<h2>
+    WRITE-ITEM
+</h2>
+
+<code>
+    <pre>
+(h) WRITE-ITEM f1 .
+    </pre>
+</code>
