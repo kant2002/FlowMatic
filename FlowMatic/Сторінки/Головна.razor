@@ -99,6 +99,69 @@
     </pre>
 </code>
 
+<h1>
+    FLOW-MATfC FUNCTIONS
+</h1>
+
+List of known functions
+
+<ul>
+    <li>
+        <a href="#ADD">ADD</a> Adds one or more fields (addends) to a specified field (augend)
+        and stores the sum in the field indicated.
+    </li>
+    <li><a href="#CLOSE-OUT">CLOSE-OUT</a></li>
+    <li>
+        <a href="#COMPARE">COMPARE</a> Examines two fields for relative magnitude and/or equality;
+        branches accordingly to the specified operations.
+    </li>
+    <li><a href="#COUNT">COUNT</a></li>
+    <li><a href="#DIVIDE">DIVIDE</a></li>
+    <li><a href="#EXECUTE">EXECUTE</a></li>
+    <li><a href="#FILL">FILL</a></li>
+    <li><a href="#HALT">HALT</a></li>
+    <li><a href="#IGNORE">IGNORE</a></li>
+    <li><a href="#INPUT">INPUT</a></li>
+    <li><a href="#INSERT">INSERT</a></li>
+    <li><a href="#JUMP">JUMP</a></li>
+    <li><a href="#MOVE">MOVE</a></li>
+    <li><a href="#MULTIPLY">MULTIPLY</a></li>
+    <li><a href="#OUTPUT">OUTPUT</a></li>
+    <li><a href="#OVERLAY">OVERLAY</a></li>
+    <li><a href="#PRINT-OUT">PRINT-OUT</a></li>
+    <li><a href="#READ-ITEM">READ-ITEM</a></li>
+    <li><a href="#REPLACE">REPLACE</a></li>
+    <li><a href="#REWIND">REWIND</a></li>
+    <li><a href="#SELECT">SELECT</a></li>
+    <li><a href="#SELECT-LEAST">SELECT-LEAST</a></li>
+    <li><a href="#add">ADD</a></li>
+    <li><a href="#add">ADD</a></li>
+    <li><a href="#add">ADD</a></li>
+    <li><a href="#add">ADD</a></li>
+    <li><a href="#add">ADD</a></li>v
+</ul>
+
+REWIND, SELECT, SELECT-LEAST, SET, STOP,
+SUBTRACT, SWITCH, TEST, TRANSFER, TYPE, WRITE-ITEM, UNIVAC.
+<ul>
+    <li>
+        DIVIDE Divides one field by another and stores the unrounded
+        quotient in a field.
+    </li>
+    <li>
+        MOVE Places one or more fields of data into any other field or
+        fields.
+    </li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
 <h1>Syntax</h1>
 <pre>
 1. Lower case indicates information to be supplied by the programmer.
@@ -113,8 +176,23 @@
 </pre>
 
 <h2>
+    <a name="ADD"></a>
+    ADD
+</h2>
+
+Adds one or more fields (addends) to a specified field (augend) and stores the sum in the field indicated.
+
+<code>
+    <pre>
+(h) ADD SALES-TAX TO RETAIL-PRICE ; STORE THE SUM IN NET-PRICE .
+    </pre>
+</code>
+
+<h2>
     CLOSE-OUT
 </h2>
+
+Terminates the output files and rewinds the output tapes.
 
 <code>
     <pre>
@@ -125,7 +203,7 @@
 <h2>
     COMPARE
 </h2>
-
+Examines two fields for magnitude and/or equality: branches accordingly.
 <code>
     <pre>
 (h) COMPARE field-name (f1) WITH field-name (f2) ; IF EQUAL GO TO OPERATION h1 ; OTHERWISE GO TO OPERATION h2 .
@@ -138,6 +216,7 @@
 <h2>
     EXECUTE
 </h2>
+Performs designated operation or sequence of operations.
 
 <code>
     <pre>
@@ -146,8 +225,21 @@
 </code>
 
 <h2>
+    <a name="FILL"></a>
+    FILL
+</h2>
+
+<code>
+    <pre>
+(h) FILL PRINT-LINE WITH SPACES .
+    </pre>
+</code>
+
+<h2>
     INPUT
 </h2>
+Identifies the input and output files to be used and supplies
+the first item of each input file.
 
 <code>
     <pre>
@@ -201,6 +293,7 @@ SPECIAL NOTES
 <h2>
     JUMP
 </h2>
+Alters the normal sequence of operations and follows the directed path.
 
 <code>
     <pre>
@@ -211,6 +304,7 @@ SPECIAL NOTES
 <h2>
     MOVE
 </h2>
+PLaces one or many fields of data in any other fields.
 
 <code>
     <pre>
@@ -222,7 +316,9 @@ SPECIAL NOTES
 <h2>
     READ-ITEM
 </h2>
-
+Supplies the next item 9f an input file. When there is no
+more data, terminates the file and takes the directed path
+within the problem
 <code>
     <pre>
 (h) READ-ITEM f1 [; IF END OF DATA GO TO OPERATION h1 ].
@@ -246,8 +342,19 @@ SPECIAL NOTES
 </ol>
 
 <h2>
+    REPLACE
+</h2>
+
+<code>
+    <pre>
+(h) REPLACE LEADING ZEROES WITH SPACES IN PRINT-COST .
+    </pre>
+</code>
+
+<h2>
     REWIND
 </h2>
+Rewinds current reel of an input file.
 
 <code>
     <pre>
@@ -256,8 +363,19 @@ SPECIAL NOTES
 </code>
 
 <h2>
+    SELECT-LEAST
+</h2>
+
+<code>
+    <pre>
+(h) SELECT-LEAST KEY ; IF A GO OP 2 , IF B GO OP 5 , IF C GO OP 8 .
+    </pre>
+</code>
+
+<h2>
     SET
 </h2>
+Alters an operation, changing the order of execution.
 
 <code>
     <pre>
@@ -268,6 +386,7 @@ SPECIAL NOTES
 <h2>
     STOP
 </h2>
+Rewinds the instruction tape and terminates the problem.
 
 <code>
     <pre>
@@ -286,7 +405,7 @@ SPECIAL NOTES
 <h2>
     TEST
 </h2>
-
+Examines the field and a constant for magnitude and/or equality; branches accordingly.
 <code>
     <pre>
 (h) TEST field-name (f1) AGAINST test-value ; IF GREATER GO TO OPERATION h1 ; IF EQUAL GO TO OPERATION h2 [; AGAINST ... ]; OTHERWISE GO TO OPERATION h3 .
@@ -314,6 +433,8 @@ SPECIAL NOTES
 <h2>
     TRANSFER
 </h2>
+Places one item or group of words in any other item or group
+of words of equal size.
 
 <code>
     <pre>
@@ -335,9 +456,16 @@ SPECIAL NOTES
 <h2>
     WRITE-ITEM
 </h2>
+Sends an output item to the output file.
 
 <code>
     <pre>
 (h) WRITE-ITEM f1 .
     </pre>
 </code>
+
+<ul>
+    <li>https://doi.org/10.1016/0066-4138(60)90042-2</li>
+    <li>https://doi.org/10.1109/MAHC.2004.34</li>
+    <li> Illinois Inst. of Technolo</li>
+</ul>
