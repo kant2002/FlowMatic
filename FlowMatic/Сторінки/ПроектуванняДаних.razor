@@ -1,0 +1,65 @@
+﻿@page "/data-design"
+
+<НазваСторінки>Проектування Даних</НазваСторінки>
+
+<h1>Проектування Даних</h1>
+
+<h2>Дізайн файлу</h2>
+<pre>
+@дізайнФайлу
+</pre>
+
+<h2>Дізайн елемента</h2>
+<pre>
+@дізайнЕлемента
+</pre>
+
+<h2>Дізайн поля</h2>
+<pre>
+@дізайнПоля
+</pre>
+
+@code {
+    private string дізайнФайлу = @"
+NAME OF FILE
+xxxxxxxxxxxx
+FILE DESIGN 
+                   
+LABEL      
+xxxxxxxxxxxx
+LOC OF LABEL
+         xxx
+MULTI REEL  
+           x
+BLK CT IND  
+           x
+BLK CT LOC  
+         xxx
+END REEL SEN
+xxxxxxxxxxxx
+END FILE SEN
+xxxxxxxxxxxx
+LOC IN FIRST
+         xxx
+LOC IN LAST 
+         xxx
+";
+    private string дізайнЕлемента = @"
+ITEM DESIGN 
+            
+ITEM SIZE
+         xxx
+NO OF KEYS  
+           x
+KEY 1       
+xxxxxxxxxxxx
+";
+    private string дізайнПоля = @"
+FIELD DESIGN 
+            
+            
+000xxx000000
+00000xxxxxx0
+            
+";
+}
