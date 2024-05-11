@@ -31,6 +31,13 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script>
+        window.scrollToNamedTag = function (name) {
+            const elements = document.getElementsByName(name);
+            if (elements.length === 0) return;
+            elements[0].scrollIntoView({ behavior: 'smooth', block: "start" });
+        }
+    </script>
 </body>
 
 </html>
