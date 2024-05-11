@@ -43,8 +43,7 @@ List of operations.
 
 ## References
 
-<ul>
-    <li>https://doi.org/10.1016/0066-4138(60)90042-2</li>
-    <li>https://doi.org/10.1109/MAHC.2004.34</li>
-    <li>https://zonadepruebas.com/viewtopic.php?t=4533</li>
-</ul>
+- https://doi.org/10.1016/0066-4138(60)90042-2
+- https://doi.org/10.1109/MAHC.2004.34
+- https://zonadepruebas.com/viewtopic.php?t=4533
+- http://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf
