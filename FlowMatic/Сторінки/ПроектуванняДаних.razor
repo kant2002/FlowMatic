@@ -19,6 +19,11 @@
 @дізайнПоля
 </pre>
 
+<h2>Інвентар</h2>
+<pre>
+@Переформатувати(Інвентар)
+</pre>
+
 @code {
     private string дізайнФайлу = @"
 NAME OF FILE
@@ -62,4 +67,59 @@ FIELD DESIGN
 00000xxxxxx0
             
 ";
+
+    private ДізайнФайлу Інвентар = new ДізайнФайлу()
+    {
+        НазваФайлу = "INVENTORY",
+        Мітка = "MMDDYY100101",
+        МісцеМітки = 3,
+        БагатоБобінний = true,
+        ІндікаторКількостіБлоків = true,
+        МісцеКількостіБлоків = 1,
+        ДізайнЕлементів = new ДізайнЕлементів()
+        {
+            РозмірЕлемента = 10,
+            Ключи = ["PRODUCT-NO"]
+        },
+        ДізайнПолей = new ДізайнПолей()
+        {
+            Поля = new[]
+            {
+                new ОписПоля()
+                {
+                    Назва = "PRODUCT-NO",
+                    Тип = ТипПоля.ЧислаТаЛітери,
+                    Місце = 0
+                },
+                new ОписПоля()
+                {
+                    Назва = "QUANTITY",
+                    Тип = ТипПоля.Числовий,
+                    Місце = 1
+                },
+            }
+        },
+    };
+
+    static string Переформатувати(ДізайнФайлу файл)
+    {
+        var текст = файл.ToString();
+        System.Text.StringBuilder результат = new();
+        var chunkSize = 12 + Environment.NewLine.Length;
+        for (var i = 0 ; i < текст.Length / chunkSize; i++)
+        {
+            var chunk = текст.Substring(i * chunkSize, 12);
+            результат.Append(chunk);
+            if (i % 10 == 9)
+            {
+                результат.Append(Environment.NewLine);
+            }
+            else
+            {
+                результат.Append(' ');
+            }
+        }
+
+        return результат.ToString();
+    }
 }
