@@ -10,8 +10,8 @@ public class ДізайнФайлу
     public bool БагатоБобінний;
     public bool ІндікаторКількостіБлоків;
     public ushort МісцеКількостіБлоків;
-    public string МаркерКінцяБобіни = "ZZZZZZZZY";
-    public string МаркерКінцяФайла = "ZZZZZZZZZ";
+    public string МаркерКінцяБобіни = "ZZZZZZZZZZZY";
+    public string МаркерКінцяФайла = "ZZZZZZZZZZZZ";
     public ushort МісцеПершого;
     public ushort МісцеОстаннього;
 
