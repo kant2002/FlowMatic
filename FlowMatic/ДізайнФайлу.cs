@@ -17,7 +17,7 @@ public class ДізайнФайлу
 
     public ДізайнЕлементів ДізайнЕлементів;
 
-    public ДізайнПолей ДізайнПолей;
+    public ДізайнПолей? ДізайнПолей;
 
     public override string ToString()
     {

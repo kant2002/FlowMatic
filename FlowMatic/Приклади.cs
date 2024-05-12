@@ -1,6 +1,6 @@
 ﻿namespace FlowMatic;
 
-public static class ПрикладиФайлів
+public static class Приклади
 {
 
     public static ДізайнФайлу Інвентар = new ДізайнФайлу()
@@ -103,8 +103,8 @@ public static class ПрикладиФайлів
         },
         ДізайнПолей = new ДізайнПолей()
         {
-            Поля = new[]
-            {
+            Поля =
+            [
                 new ОписПоля()
                 {
                     Назва = "PRODUCT-NO",
@@ -148,13 +148,13 @@ public static class ПрикладиФайлів
                     КількістьСимволів = 10,
                     Витягач = "001111111111",
                 },
-            }
+            ]
         },
     };
 
     public static ДізайнФайлу НеоціненийІнвентар = new ДізайнФайлу()
     {
-        НазваФайлу = "INVENTORY",
+        НазваФайлу = "UNPRICED-INV",
         Мітка = "MMDDYY100401",
         МісцеМітки = 3,
         БагатоБобінний = true,
@@ -167,8 +167,8 @@ public static class ПрикладиФайлів
         },
         ДізайнПолей = new ДізайнПолей()
         {
-            Поля = new[]
-            {
+            Поля =
+            [
                 new ОписПоля()
                 {
                     Назва = "PRODUCT-NO",
@@ -190,7 +190,76 @@ public static class ПрикладиФайлів
                     КількістьСимволів = 6,
                     Витягач = "000000111111",
                 },
-            }
+            ]
         },
+    };
+
+    public static ДізайнФайлу Помилка = new ДізайнФайлу()
+    {
+        НазваФайлу = "ERROR",
+        Мітка = "MMDDYY100501",
+        МісцеМітки = 3,
+        БагатоБобінний = true,
+        ІндікаторКількостіБлоків = true,
+        МісцеКількостіБлоків = 1,
+        ДізайнЕлементів = new ДізайнЕлементів()
+        {
+            РозмірЕлемента = 10,
+            Ключи = []
+        },
+    };
+
+    public static ЛентаВводу Приклад1 = new()
+    {
+        Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар],
+        ІсходнийКод =
+        """
+        (0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ; HSP D .
+        (1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 10 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
+        (2) TRANSFER A TO D .
+        (3) WRITE-ITEM D .
+        (4) JUMP TO OPERATION 8 .
+        (5) TRINSFER A TO C .
+        (6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) .
+        (7) WRITE-ITEM C .
+        (8) READ-ITEM A ; IF END OF DATA GO TO OPERATION 14 .
+        (9) JUMP TO OPERATION 1 .
+        (10) READ-ITEM B ; IF END OF DATA GO TO OPERATION 14 .
+        (11) JUMP TO OPERATION 1 .
+        (12) SET OPERATION 9 TO GO TO OPERATION 2 .
+        (13) JUMP TO OPERATION 2 .
+        (14) TEST PRODUCT-NO (B) AGAINST ZZZZZZZZZZZZ ; IF EQUAL GO TO OPERATION 16; OTHERWISE GO TO OPERATION 15 .
+        (15) REWIND B .
+        (16) CLOSE-OUT FILES C, D .
+        (17) STOP. (END)
+        """
+    };
+
+    public static ЛентаВводу Приклад2 = new()
+    {
+        Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар, Помилка],
+        ІсходнийКод =
+        """        
+        (0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ERROR FILE-E ; HSP D, E .
+        (1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 14 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
+        (2) TRANSFER A TO D .
+        (3) WRITE-ITEM D .
+        (4) JUMP TO OPERATION 8 .
+        (5) TRINSFER A TO C .
+        (6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) .
+        (7) WRITE-ITEM C .
+        (8) MOVE PRODUCT-NO (A) TO PRODUCT-NO (W) .
+        (9) READ-ITEM A ; IF END OF DATA GO TO OPERATION 16 .
+        (10) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (W); IF EQUAL GO TO OPERATION 11; OTHERWISE GO TO OPERATION 1 .
+        (11) TRANSFER A TO E .
+        (12) WRITE-ITEM E .
+        (13) JUMP TO OPERATION 9 .
+        (14) READ-ITEM B ; IF END OF DATA GO TO OPERATION 1 .
+        (15) JUMP TO OPERATION 1 .
+        (16) TEST PRODUCT-NO (B) AGAINST ZZZZZZZZZZZZ; IF EQUAL GO TO OPERATION 16; OTHERWISE GO TO OPERATION 18 .
+        (17) REWIND B .
+        (18) CLOSE-OUT FILES C, D, E .
+        (19) STOP. (END)
+        """
     };
 }

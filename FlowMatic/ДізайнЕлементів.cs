@@ -13,6 +13,13 @@ public class ДізайнЕлементів
         var ключи = string.Join("", Ключи.Select((значение, індекс) => $@"KEY {індекс,1}       
 {значение,-12}
 ".ReplaceLineEndings()));
+        if (Ключи.Length == 0)
+        {
+            ключи = $@"KEY 1       
+            
+".ReplaceLineEndings();
+        }
+
         var результат = ($@"ITEM DESIGN 
             
 ITEM SIZE   
