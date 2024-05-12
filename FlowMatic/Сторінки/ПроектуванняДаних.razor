@@ -49,6 +49,16 @@ On this page displayed samples how FLOW-MATIC describe data on the tape. Best se
 <h3>Item sample</h3>
 @РозміткаФайлу(Приклади.НеоціненийІнвентар)
 
+<h2>Working area</h2>
+<pre>
+@Переформатувати(Приклади.РобочаОбластьЗадачи3)
+</pre>
+
+<h2>Directory</h2>
+<pre>
+@Переформатувати(Приклади.Приклад3.Діректорія)
+</pre>
+
 @code {
     private string дізайнФайлу = @"
 NAME OF FILE
@@ -126,12 +136,15 @@ FIELD DESIGN
         </ul>
     };
 
-    static string Переформатувати(ДізайнФайлу файл)
+    static string Переформатувати(ДізайнФайлу файл) => Переформатувати(файл.ToString());
+    static string Переформатувати(РобочаОбласть робочаОбласть) => Переформатувати(робочаОбласть.ToString());
+    static string Переформатувати(Діректорія діректорія) => Переформатувати(діректорія.ToString());
+
+    static string Переформатувати(string текст)
     {
-        var текст = файл.ToString();
         System.Text.StringBuilder результат = new();
         var chunkSize = 12 + Environment.NewLine.Length;
-        for (var i = 0 ; i < текст.Length / chunkSize; i++)
+        for (var i = 0; i < текст.Length / chunkSize; i++)
         {
             var chunk = текст.Substring(i * chunkSize, 12);
             результат.Append(chunk);

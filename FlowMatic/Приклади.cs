@@ -209,6 +209,26 @@ public static class Приклади
         },
     };
 
+    public static РобочаОбласть РобочаОбластьЗадачи3 = new ()
+    {
+        ДізайнПолей = new ДізайнПолей()
+        {
+            Поля =
+            [
+                new ОписПоля()
+                {
+                    Назва = "PRODUCT-NO",
+                    Тип = ТипПоля.ЧислаТаЛітери,
+                    Місце = 0,
+                    ПозіціяТочки = "",
+                    ПозіціяЗнака = null,
+                    ПозіціяНайлівішогоСимвола = 1,
+                    КількістьСимволів = 12,
+                },
+            ]
+        },
+    };
+
     public static ЛентаВводу Приклад1 = new()
     {
         Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар],
@@ -239,7 +259,7 @@ public static class Приклади
     {
         Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар, Помилка],
         ІсходнийКод =
-        """        
+        """
         (0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ERROR FILE-E ; HSP D, E .
         (1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 14 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
         (2) TRANSFER A TO D .
@@ -260,6 +280,47 @@ public static class Приклади
         (17) REWIND B .
         (18) CLOSE-OUT FILES C, D, E .
         (19) STOP. (END)
+        """
+    };
+
+    public static ЛентаВводу Приклад3 = new()
+    {
+        Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар],
+        РобочаОбласть = РобочаОбластьЗадачи3,
+        Діректорія = new()
+        {
+            МаксімальнийАдрес = 0,
+        },
+        ІсходнийКод =
+        """
+        (0) INPUT INVENTORY FllE-A PRICE FllE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FllE-D ; HSP D . 
+        (I) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION  21 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 . 
+        (2) TRANSFER A TO D . 
+        (3) SET OPERATION 13 TO GO TO OPERATION 18 . 
+        (4) JUMP TO OPERATION 8 . 
+        (5) TRANSFER A TO C . 
+        (6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) . 
+        (7) SET OPERATION 13 TO GO TO OPERATION 14 . 
+        (8) MOVE PRODUCT-NO (A) TO PRODUCT-NO (W) ; QUANTITY (A) TO QUANTITY (W).
+        (9) READ-ITEM A ; IF END OF DATA GO TO OPERATION 23 .
+        (10) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (W) ; IF EQUAL GO TO OPERATION 11 ; OTHERWISE GO TO OPERATION 13 .
+        (11) X-I ADD QUANTITY (A) TO STORED QUANTITY (W) . 
+        (12) JUMP TO OPERATION 9 . 
+        (13) JUMP TO OPERATION 14 . 
+        (I4) MOVE QUANTITY (W) TO QUANTITY (C) , 
+        (15) X-I COMPUTE EXTENDED PRICE AND INSERT IN C ITEM.
+        (16) WRITE-ITEM C . 
+        (I7) JUMP TO OPERATION 1 .
+        (18) MOVE QUANTITY (W) TO QUANTITY (D) .
+        (19) WRITE-ITEM D .
+        (20) JUMP TO OPERATION 17 .
+        (21) READ-ITEM B ; IF END OF DATA GO TO OPERATION 1 .
+        (22) JUMP TO OPERATION 1 .
+        (23) EXECUTE OPERATION 13 THROUGH OPERATION 17 . 
+        (24) TEST PRODUCT-NO (8) AGAINST ZZZZZZZZZZZZ ; IF EQUAL GO TO OPERATION 26 ; OTHERWISE GO TO OPERATION 25 .
+        (25) REWIND B .
+        (26) CLOSE-OUT FILES C , D .
+        (27) STOP. (END) 
         """
     };
 }
