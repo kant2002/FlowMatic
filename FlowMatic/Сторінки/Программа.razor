@@ -1,0 +1,23 @@
+﻿@page "/program"
+
+<НазваСторінки>Program</НазваСторінки>
+
+<h1>
+    Program
+</h1>
+<InputTextArea @bind-Value="ІсходнийКод" cols="40" />
+
+@code {
+    private string ісходнийКод;
+
+    public string ІсходнийКод
+    { 
+        get => ісходнийКод;
+        set
+        {
+            ісходнийКод = value;
+            var к = new Компілятор();
+            к.Скомпілювати(ісходнийКод);
+        }
+    }
+}

@@ -236,7 +236,7 @@ public static class Приклади
         Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар],
         ІсходнийКод =
         """
-        (0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ; HSP D .
+        (0) INPUT INVENTORY FILE-A PRICE FILE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ; HSP D .
         (1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 10 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
         (2) TRANSFER A TO D .
         (3) WRITE-ITEM D .
@@ -262,7 +262,7 @@ public static class Приклади
         Файли = [Інвентар, Ціна, ОціненийІнвентар, НеоціненийІнвентар, Помилка],
         ІсходнийКод =
         """
-        (0) INPUT INVENTORY FILE-A PRICE F1LE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ERROR FILE-E ; HSP D, E .
+        (0) INPUT INVENTORY FILE-A PRICE FILE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D ERROR FILE-E ; HSP D, E .
         (1) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (B) ; IF GREATER GO TO OPERATION 14 ; IF EQUAL GO TO OPERATION 5 ; OTHERWISE GO TO OPERATION 2 .
         (2) TRANSFER A TO D .
         (3) WRITE-ITEM D .
