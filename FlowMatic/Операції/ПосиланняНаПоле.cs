@@ -1,3 +1,3 @@
 ﻿namespace FlowMatic.Операції;
 
-public record ПосиланняНаПоле(string Поле, char Файл);
+public record ПосиланняНаПоле(string Поле, char Файл) : ІОперація;

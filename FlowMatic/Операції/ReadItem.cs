@@ -1,3 +1,3 @@
 ﻿namespace FlowMatic.Операції;
 
-public record ReadItem(char Файл);
+public record ReadItem(char Файл): ІОперація;

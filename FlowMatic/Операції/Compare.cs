@@ -1,6 +1,6 @@
 ﻿namespace FlowMatic.Операції
 {
-    public class Compare
+    public class Compare : ІОперація
     {
         public ПосиланняНаПоле Перший;
         public ПосиланняНаПоле Другий;

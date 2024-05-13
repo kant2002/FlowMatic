@@ -1,6 +1,6 @@
 ﻿namespace FlowMatic.Операції;
 
-public class Input
+public class Input : ІОперація
 {
     public ОписФайла[] ВхідніФайли;
     public ОписФайла[] ВихідніФайли;
