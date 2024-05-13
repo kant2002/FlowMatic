@@ -241,7 +241,7 @@ public static class Приклади
         (2) TRANSFER A TO D .
         (3) WRITE-ITEM D .
         (4) JUMP TO OPERATION 8 .
-        (5) TRINSFER A TO C .
+        (5) TRANSFER A TO C .
         (6) MOVE UNIT-PRICE (B) TO UNIT-PRICE (C) .
         (7) WRITE-ITEM C .
         (8) READ-ITEM A ; IF END OF DATA GO TO OPERATION 14 .
