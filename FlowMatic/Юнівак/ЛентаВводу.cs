@@ -1,4 +1,4 @@
-﻿namespace FlowMatic;
+﻿namespace FlowMatic.Юнівак;
 
 public class ЛентаВводу
 {

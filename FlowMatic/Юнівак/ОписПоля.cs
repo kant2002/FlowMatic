@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace FlowMatic;
+namespace FlowMatic.Юнівак;
 
 public class ОписПоля
 {
