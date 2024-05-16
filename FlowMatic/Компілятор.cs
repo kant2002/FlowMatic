@@ -7,7 +7,7 @@ namespace FlowMatic
     {
         public Програма Скомпілювати(string ісходнийКод)
         {
-            var лінії = ісходнийКод.Split(Environment.NewLine);
+            var лінії = ісходнийКод.ReplaceLineEndings().Split(Environment.NewLine);
             return new Програма(лінії.Select(РозібратиОперацію).ToArray());
         }
 
@@ -22,7 +22,7 @@ namespace FlowMatic
             код = код[префікс.Length..];
             if (код[код.Length - 1] != '.' && !код.StartsWith("STOP."))
             {
-                throw new InvalidOperationException("Last symbol in line should be dot.");
+                throw new InvalidOperationException($"Last symbol in line should be dot. Instead {код[код.Length - 1]}");
             }
 
             код = код[..(код.Length - 1)];
