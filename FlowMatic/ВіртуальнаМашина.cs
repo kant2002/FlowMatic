@@ -6,7 +6,7 @@ namespace FlowMatic;
 
 public class ВіртуальнаМашина
 {
-    private СервоПривід[] СервоПривіди = new СервоПривід[16];
+    public СервоПривід[] СервоПривіди { get; private set; } = new СервоПривід[16];
     public int КількістьПриводів { get; private set; }
     public int КількістьФайлів => СервоПривідиСловник.Count;
     public IEnumerable<РезерваціяПривіда> РезерваціяПривідів => СервоПривідиСловник.Values;

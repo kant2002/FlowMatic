@@ -4,10 +4,12 @@ public class СервоПривід
 {
     private int позиція;
     private string дані;
+    public string Назва { get; private set; }
     public bool КінецьДаних;
-    public void ВставитиЛенту(string дані)
+    public void ВставитиЛенту(Лента дані)
     {
-        this.дані = дані;
+        this.дані = дані.Зміст;
+        this.Назва = дані.Назва;
         this.позиція = 0;
     }
 
