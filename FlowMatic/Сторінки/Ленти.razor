@@ -14,22 +14,39 @@
 @Форматування.Переформатувати(лента.Зміст)
     </pre>
 
-    <button type="button" @onclick="() => Видалити(лента.Назва)">Remove</button>
+    <button type="button" class="btn btn-primary" @onclick="() => Редагувати(лента.Назва)">Edit</button>
+    <button type="button" class="btn btn-danger" @onclick="() => Видалити(лента.Назва)">Remove</button>
 }
 
-<h1>Add</h1>
+@if (Редагування)
+{
+    <h1>Change</h1>
+}
+else
+{
+    <h1>Add</h1>
+}
 <label>Label</label>
-<InputText @bind-Value="Назва" />
+<InputText @bind-Value="Назва" disabled="@Редагування" />
 
 <label>Content</label>
 <InputText @bind-Value="Зміст" />
 
-<button type="button" @onclick="Додати">Add</button>
+@if (Редагування)
+{
+    <button type="button" class="btn btn-primary" @onclick="Зберегти">Save</button>
+    <button type="button" class="btn btn-secondary" @onclick="Відмінити">Cancel</button>
+}
+else
+{
+    <button type="button" class="btn btn-primary" @onclick="Додати">Add</button>
+}
 
 
 @code {
     public string Назва { get; set; } = "";
     public string Зміст { get; set; } = "";
+    public bool Редагування { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,5 +62,26 @@
     public async Task Видалити(string назва)
     {
         await бібліотекаЛент.ВидалитиЛенту(назва);
+    }
+
+    public async Task Зберегти()
+    {
+        await бібліотекаЛент.ЗамінитиЛенту(Назва, Зміст);
+        Відмінити();
+    }
+
+    public void Відмінити()
+    {
+        Редагування = false;
+        Назва = "";
+        Зміст = "";
+    }
+
+    public void Редагувати(string назва)
+    {
+        Редагування = true;
+        var л = бібліотекаЛент.Ленти.First(_ => _.Назва == назва);
+        Назва = л.Назва;
+        Зміст = л.Зміст;
     }
 }
