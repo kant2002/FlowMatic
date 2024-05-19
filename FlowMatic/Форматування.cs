@@ -8,7 +8,7 @@ public class Форматування
     public static string Переформатувати(РобочаОбласть робочаОбласть) => Переформатувати(робочаОбласть.ToString());
     public static string Переформатувати(Діректорія діректорія) => Переформатувати(діректорія.ToString());
 
-    private static string Переформатувати(string текст)
+    public static string Переформатувати(string текст)
     {
         System.Text.StringBuilder результат = new();
         var chunkSize = 12 + Environment.NewLine.Length;

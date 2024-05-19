@@ -1,4 +1,5 @@
 ﻿@page "/reels"
+@inject БібліотекаЛент бібліотекаЛент
 
 <НазваСторінки>Reels</НазваСторінки>
 
@@ -6,5 +7,37 @@
     Reels
 </h1>
 
+@foreach (var лента in бібліотекаЛент.Ленти)
+{
+    <h2>@лента.Назва</h2>
+    <pre>
+@Форматування.Переформатувати(лента.Зміст)
+    </pre>
+
+    <button type="button" @onclick="() => Видалити(лента.Назва)">Remove</button>
+}
+
+<h1>Add</h1>
+<label>Label</label>
+<InputText @bind-Value="Назва" />
+
+<label>Content</label>
+<InputText @bind-Value="Зміст" />
+
+<button type="button" @onclick="Додати">Add</button>
+
+
 @code {
+    public string Назва { get; set; } = "";
+    public string Зміст { get; set; } = "";
+
+    public void Додати()
+    {
+        бібліотекаЛент.ДодатиЛенту(Назва, Зміст);
+    }
+
+    public void Видалити(string назва)
+    {
+        бібліотекаЛент.ВидалитиЛенту(назва);
+    }
 }
