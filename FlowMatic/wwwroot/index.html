@@ -37,6 +37,17 @@
             if (elements.length === 0) return;
             elements[0].scrollIntoView({ behavior: 'smooth', block: "start" });
         }
+        window.getReels = function () {
+            const reels = localStorage.getItem("reels");
+            if (reels) {
+                return JSON.parse(reels);
+            }
+
+            return [];
+        }
+        window.setReels = function (reels) {
+            localStorage.setItem("reels", JSON.stringify(reels));
+        }
     </script>
 </body>
 

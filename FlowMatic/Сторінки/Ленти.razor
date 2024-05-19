@@ -31,13 +31,19 @@
     public string Назва { get; set; } = "";
     public string Зміст { get; set; } = "";
 
-    public void Додати()
+    protected override async Task OnInitializedAsync()
     {
-        бібліотекаЛент.ДодатиЛенту(Назва, Зміст);
+        await бібліотекаЛент.ЗавантажитиІзЛокальногоСховища();
+        await base.OnInitializedAsync();
     }
 
-    public void Видалити(string назва)
+    public async Task Додати()
     {
-        бібліотекаЛент.ВидалитиЛенту(назва);
+        await бібліотекаЛент.ДодатиЛенту(Назва, Зміст);
+    }
+
+    public async Task Видалити(string назва)
+    {
+        await бібліотекаЛент.ВидалитиЛенту(назва);
     }
 }
