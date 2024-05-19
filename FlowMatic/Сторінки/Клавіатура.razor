@@ -1,0 +1,81 @@
+﻿@page "/keyboard"
+
+<НазваСторінки>Keyboard</НазваСторінки>
+
+<h1>
+    UNITYPER II
+</h1>
+<div class="row">
+    @ДваСимвола(('!', '1'))
+    @ДваСимвола(('"', '2'))
+    @ДваСимвола(('#', '3'))
+    @ДваСимвола(('$', '4'))
+    @ДваСимвола(('%', '5'))
+    @ДваСимвола(('_', '6'))
+    @ДваСимвола(('&', '7'))
+    @ДваСимвола((',', '8'))
+    @ДваСимвола(('(', '9'))
+    @ДваСимвола((')', '0'))
+    @ДваСимвола(('*', '-'))
+    @ДваСимвола(('+', '='))
+</div>
+<div class="row">
+    @Символ('Q')
+    @Символ('W')
+    @Символ('E')
+    @Символ('R')
+    @Символ('T')
+    @Символ('Y')
+    @Символ('U')
+    @Символ('I')
+    @Символ('O')
+    @Символ('P')
+    @ДваСимвола(('¼', '½'))
+</div>
+<div class="row">
+    <div class="col"></div>
+    @Символ('A')
+    @Символ('S')
+    @Символ('D')
+    @Символ('F')
+    @Символ('G')
+    @Символ('H')
+    @Символ('J')
+    @Символ('K')
+    @Символ('L')
+    @ДваСимвола((':', ';')) @* 1/4 1/2 *@
+    @ДваСимвола(('@', '¢'))
+</div>
+<div class="row">
+    <div class="col"></div>
+    @Символ('Z')
+    @Символ('X')
+    @Символ('C')
+    @Символ('V')
+    @Символ('B')
+    @Символ('N')
+    @Символ('M')
+    @Символ(';') @* Не бачу що за символ *@
+    @Символ(':') @* Не бачу що за символ *@
+    @ДваСимвола(('?', '/')) @* Не бачу що за символ *@
+</div>
+
+<a href="https://americanhistory.si.edu/collections/nmah_739255">UNITYPER II</a>
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhl5TcZJ9ZmNi10YFp9S13uNFOmOkMgVtAyKbvW7GjTSy54rNJz2PzHz8Whq1eCgO7ikB4U2gdCHTGmnHd2PoYAXxP1QyxaiymvxucYP-hbdtNhzowsz8fnXHj6dKXxE8QOonRzIjGoEYWj/s1600/199500550001.JPG">Remington Standard Electric typewriter (base for UNITYPER II)</a>
+
+@code {
+    RenderFragment<(char First, char Second)> ДваСимвола = value => __builder =>
+    {
+        <div class="col">
+            @value.First
+        <br />
+        @value.Second
+        </div>
+    };
+    RenderFragment<char> Символ = value => __builder =>
+    {
+        <div class="col">
+            @value
+        </div>
+    };
+}
