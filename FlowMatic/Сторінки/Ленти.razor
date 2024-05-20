@@ -26,6 +26,14 @@ else
 {
     <h1>Add</h1>
 }
+<InputSelect @bind-Value="ШаблонФайлу">
+    <option value="">-- Raw data --</option>
+    @foreach (var файл in ДізайнФайлів)
+    {
+        <option value="@файл.НазваФайлу">@файл.НазваФайлу</option>
+    }
+</InputSelect>
+
 <label>Label</label>
 <InputText @bind-Value="Назва" disabled="@Редагування" />
 
@@ -46,7 +54,10 @@ else
 @code {
     public string Назва { get; set; } = "";
     public string Зміст { get; set; } = "";
+    public string ШаблонФайлу { get; set; } = "";
     public bool Редагування { get; set; }
+
+    public ДізайнФайлу[] ДізайнФайлів = [Приклади.Інвентар, Приклади.Ціна, Приклади.ОціненийІнвентар, Приклади.НеоціненийІнвентар, Приклади.Помилка,];
 
     protected override async Task OnInitializedAsync()
     {

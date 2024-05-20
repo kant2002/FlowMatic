@@ -1,5 +1,6 @@
 ﻿@page "/program"
 @inject БібліотекаЛент бібліотекаЛент
+@inject ВіртуальнаМашина ВіртуальнаМашина
 
 <НазваСторінки>Program</НазваСторінки>
 @{
@@ -81,7 +82,6 @@
     }
 
     public ЛентаВводу ЛентаВводу = new();
-    public ВіртуальнаМашина ВіртуальнаМашина = new();
 
     protected override async Task OnInitializedAsync()
     {
