@@ -1,0 +1,64 @@
+﻿@for (var i = 0; i < Чанки.Length; i++)
+{
+    if (ДізайнФайлу.ДізайнПолей is null)
+    {
+        <text>Editing of the file without field design is not implemented yet.</text>
+    }
+    else
+    {
+        @foreach (var поля in ДізайнФайлу.ДізайнПолей.Поля)
+        {
+            var x = i;
+            Console.WriteLine(i);
+            var чанк = Чанки[i];
+            <РедакторПоля @bind-Зміст="чанк" ОписПоля="поля" @bind-Зміст:after="ЧанкОновлено2(x, чанк)" />
+        }
+    }
+}
+
+<button type="button" class="btn btn-primary" @onclick="Додати">Add item</button>
+
+@code {
+    [Parameter]
+    public required string Зміст
+    {
+        get => string.Join("", Чанки);
+        set
+        {
+            Чанки = value.Chunk(ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12).Select(x => new string(x)).ToArray();
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> ЗмістChanged { get; set; }
+
+    [Parameter]
+    public required ДізайнФайлу ДізайнФайлу { get; set; }
+
+    public string[] Чанки;// => Зміст.Chunk(ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента).Select(x => new string(x)).ToArray();
+
+    public void Додати()
+    {
+        Зміст += new string(' ', ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12);
+    }
+
+    private async Task ЧанкОновлено(int i, string чанк)
+    {
+        Console.WriteLine($"Чанки[{i}]= '{чанк}', Зміст файлу '{Зміст}'");
+        Чанки[i] = чанк;
+        Console.WriteLine($"Чанки[{i}]= '{чанк}', Зміст файлу '{Зміст}'");
+        await ЗмістChanged.InvokeAsync(Зміст);
+    }
+    private Func<Task> ЧанкОновлено2(int i, string чанк)
+    {
+        var x = i;
+        return async () =>
+        {
+            Console.WriteLine($"Чанки[{x}]= '{чанк}', Зміст файлу '{Зміст}'");
+            Чанки[x] = чанк;
+            Console.WriteLine($"Чанки[{x}]= '{чанк}', Зміст файлу '{Зміст}'");
+            await ЗмістChanged.InvokeAsync(Зміст);
+        };
+    }
+
+}

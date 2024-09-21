@@ -1,0 +1,65 @@
+﻿<div class="row">
+    <div class="col">
+        @ОписПоля.Назва
+    </div>
+    <div class="col">
+        <InputText @bind-Value="ЗначенняПоля" @bind-Value:after="ПолеОновлено" maxlength="@ОписПоля.КількістьСимволів" />
+    </div>
+</div>
+
+@code {
+    public string зміст = "";
+    [Parameter]
+    public required string Зміст
+    {
+        get => зміст;
+        set
+        {
+            зміст = value;
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> ЗмістChanged { get; set; }
+
+    [Parameter]
+    public required ОписПоля ОписПоля { get; set; }
+
+    public int ПозіціяНайлівішогоСимвола => ОписПоля.Місце * 12 + ОписПоля.ПозіціяНайлівішогоСимвола - 1;
+
+    public string ЗначенняПоля
+    {
+        get => Зміст.Length <= ПозіціяНайлівішогоСимвола
+                ? "" 
+                : Зміст.Length <= ПозіціяНайлівішогоСимвола + ОписПоля.КількістьСимволів
+                    ? Зміст.Substring(ПозіціяНайлівішогоСимвола)
+                    : Зміст.Substring(ПозіціяНайлівішогоСимвола, ОписПоля.КількістьСимволів);
+        set
+        {
+            if (Зміст.Length <= ПозіціяНайлівішогоСимвола) return;
+            if (Зміст.Length <= ПозіціяНайлівішогоСимвола + ОписПоля.КількістьСимволів)
+            {
+                Зміст = Зміст.Substring(0, ПозіціяНайлівішогоСимвола) + ФіксованаДовжина(value, ОписПоля.КількістьСимволів);
+                return;
+            }
+            else
+            {
+                Зміст = Зміст.Substring(0, ПозіціяНайлівішогоСимвола) + ФіксованаДовжина(value, ОписПоля.КількістьСимволів) + Зміст.Substring(ПозіціяНайлівішогоСимвола + ОписПоля.КількістьСимволів);
+            }
+        }
+    }
+
+    public static string ФіксованаДовжина(string значення, int довжина)
+    {
+        if (значення.Length < довжина) return new string(' ', довжина - значення.Length) + значення;
+        return значення.Substring(0, довжина);
+    }
+
+    private async Task ПолеОновлено()
+    {
+        Console.WriteLine($"Зміст чанку '{Зміст}'");
+        await ЗмістChanged.InvokeAsync(Зміст);
+        Console.WriteLine($"Зміст чанку2 '{Зміст}'");
+    }
+
+}

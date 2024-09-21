@@ -37,9 +37,6 @@ else
 <label>Label</label>
 <InputText @bind-Value="Назва" disabled="@Редагування" />
 
-<label>Content</label>
-<InputText @bind-Value="Зміст" />
-
 @if (Редагування)
 {
     <button type="button" class="btn btn-primary" @onclick="Зберегти">Save</button>
@@ -51,6 +48,26 @@ else
 }
 
 
+<div class="row">
+    <div class="col">
+        <label>Content</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        @if (ВибранийДізайнФайлів is null)
+        {
+            <InputText @bind-Value="Зміст" />
+        }
+        else
+        {
+            <РедакторФайла ДізайнФайлу="ВибранийДізайнФайлів" @bind-Зміст="Зміст" />
+            <pre>@ВідоформатуватиЛенту(Зміст)</pre>
+        }
+    </div>
+</div>
+
+
 @code {
     public string Назва { get; set; } = "";
     public string Зміст { get; set; } = "";
@@ -58,6 +75,8 @@ else
     public bool Редагування { get; set; }
 
     public ДізайнФайлу[] ДізайнФайлів = [Приклади.Інвентар, Приклади.Ціна, Приклади.ОціненийІнвентар, Приклади.НеоціненийІнвентар, Приклади.Помилка,];
+
+    public ДізайнФайлу? ВибранийДізайнФайлів => ДізайнФайлів.FirstOrDefault(дф => дф.НазваФайлу == ШаблонФайлу);
 
     protected override async Task OnInitializedAsync()
     {
@@ -94,5 +113,10 @@ else
         var л = бібліотекаЛент.Ленти.First(_ => _.Назва == назва);
         Назва = л.Назва;
         Зміст = л.Зміст;
+    }
+
+    public static string ВідоформатуватиЛенту(string зміст)
+    {
+        return string.Join(Environment.NewLine, зміст.Chunk(12).Select(x => new string(x)));
     }
 }
