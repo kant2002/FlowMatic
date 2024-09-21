@@ -16,7 +16,7 @@ public class ТестКомпілятора
         var input = Assert.IsType<Input>(операція);
         Assert.Equal([new("INVENTORY", 'A', []), new("PRICE", 'B', [])], input.ВхідніФайли);
         Assert.Equal([new("PRICED-INV", 'C', []), new("UNPRICED-INV", 'D', [])], input.ВихідніФайли);
-        Assert.Equal(['D'], input.ВисокошвидкосніПрінтери);
+        Assert.Equal(new char[] { 'D' }, input.ВисокошвидкосніПрінтери);
     }
 
     [Fact]
@@ -134,7 +134,7 @@ public class ТестКомпілятора
 
         var операція = програма.Операції[0];
         var input = Assert.IsType<Rewind>(операція);
-        Assert.Equal(['B'], input.Файли);
+        Assert.Equal(new char[] { 'B' }, input.Файли);
     }
 
     [Fact]
@@ -147,7 +147,7 @@ public class ТестКомпілятора
 
         var операція = програма.Операції[0];
         var input = Assert.IsType<CloseOut>(операція);
-        Assert.Equal(['C', 'D'], input.Файли);
+        Assert.Equal(new char[] { 'C', 'D' }, input.Файли);
     }
 
     [Fact]
@@ -174,7 +174,7 @@ public class ТестКомпілятора
         var input = Assert.IsType<Move>(операція);
         Assert.Equal(1, input.ОписПереміщення.Length);
         Assert.Equal(new ПосиланняНаПоле("UNIT-PRICE", 'B'), input.ОписПереміщення[0].ІсходнеПоле);
-        Assert.Equal([new ПосиланняНаПоле("UNIT-PRICE", 'C')], input.ОписПереміщення[0].ЦільовіПоля);
+        Assert.Equal([new("UNIT-PRICE", 'C')], input.ОписПереміщення[0].ЦільовіПоля);
     }
 
     [Fact]
