@@ -13,11 +13,19 @@ public class СервоПривід
         this.позиція = 0;
     }
 
+    public bool ЛентаВставлена => дані is not null;
+
     public string Прочитати(int кількість)
     {
+        if (дані is null)
+        {
+            КінецьДаних = true;
+            return "";
+        }
         if (this.позиція + кількість >= this.дані.Length)
         {
             КінецьДаних = true;
+            return "";
         }
 
         кількість = Math.Min(this.дані.Length - 1, this.позиція + кількість);

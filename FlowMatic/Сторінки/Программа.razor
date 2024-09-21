@@ -13,6 +13,16 @@
 <button type="button" class="btn btn-secondary" @onclick="Приклад1">Sample 1</button>
 <button type="button" class="btn btn-secondary" @onclick="Скомпілювати">Compile</button>
 <button type="button" class="btn btn-primary" @onclick="Запустити">Run</button>
+<button type="button" class="btn btn-primary" @onclick="Крок">Step</button>
+
+@if (ВіртуальнаМашина.ФлагОстанова)
+{
+    <span class="text-danger">
+        &nbsp;
+        <i class="bi bi-x-octagon-fill"></i>
+    </span>
+    
+}
 
 <p>
     Кількість Приводів @ВіртуальнаМашина.КількістьПриводів
@@ -42,6 +52,14 @@
                     @ф.ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента
                     <text>)</text>
                 }
+            }
+
+            @if (п is not null && п.КінецьДаних)
+            {
+                <span class="text-danger">
+                    &nbsp;
+                    <i class="bi bi-bandaid"></i>
+                </span>
             }
         </div>
     }
@@ -97,6 +115,11 @@
     void Запустити()
     {
         ВіртуальнаМашина.ВиконатиПрограму();
+    }
+
+    void Крок()
+    {
+        ВіртуальнаМашина.ВиконатиРядокПрограми();
     }
 
     void Скомпілювати()

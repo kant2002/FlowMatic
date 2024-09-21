@@ -1,5 +1,4 @@
 ﻿using FlowMatic.Операції;
-using System.Linq;
 
 namespace FlowMatic
 {

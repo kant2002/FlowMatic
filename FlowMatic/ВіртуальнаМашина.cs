@@ -19,6 +19,7 @@ public class ВіртуальнаМашина
     }
 
     private int позиція;
+    public bool ФлагОстанова {  get; private set; }
     private Програма програма;
     public ЛентаВводу ЛентаВводу { get; private set; }
     public void СкомпілюватиПрограму(ЛентаВводу лентаВводу)
@@ -27,6 +28,7 @@ public class ВіртуальнаМашина
         програма = компілятор.Скомпілювати(лентаВводу.ІсходнийКод);
         this.ЛентаВводу = лентаВводу;
         ПідготуватиВхід((Input)програма.Операції[0]);
+        позиція = 0;
 
     }
     public void ВиконатиПрограму()
@@ -34,23 +36,31 @@ public class ВіртуальнаМашина
         позиція = 0;
         while (true)
         {
-            var поточнаКоманда = програма.Операції[позиція];
-            switch (поточнаКоманда)
-            {
-                case Input input:
-                    ВиконатиInput(input);
-                    break;
-                case Compare compare:
-                    ВиконатиCompare(compare);
-                    break;
-                case Stop:
-                    return;
-                default:
-                    throw new NotSupportedException($"Not supported command {поточнаКоманда} with index {позиція}");
-            }
-
-            позиція++;
+            ВиконатиРядокПрограми();
+            if (ФлагОстанова)
+                break;
         }
+    }
+    public void ВиконатиРядокПрограми()
+    {
+        ФлагОстанова = false;
+        var поточнаКоманда = програма.Операції[позиція];
+        switch (поточнаКоманда)
+        {
+            case Input input:
+                ВиконатиInput(input);
+                break;
+            case Compare compare:
+                ВиконатиCompare(compare);
+                break;
+            case Stop:
+                return;
+            default:
+                throw new NotSupportedException($"Not supported command {поточнаКоманда} with index {позиція}");
+        }
+
+        if (!ФлагОстанова)
+        позиція++;
     }
 
     private void ВиконатиInput(Input input)
@@ -58,20 +68,21 @@ public class ВіртуальнаМашина
         foreach (var описФайла in input.ВхідніФайли)
         {
             var ф = ВзятиФайл(описФайла);
-            ПрочитатиФайл(ф, описФайла);
+            var серво = ВзятиСервоПривід(описФайла.КодФайла);
+            if (!серво.ЛентаВставлена)
+            {
+                ФлагОстанова = true;
+                break;
+            }
+
+            var елемент = серво.Прочитати(ф.ДізайнЕлементів.РозмірЕлемента);
+            ФайловіБуфери[описФайла.КодФайла] = елемент;
         }
     }
 
     private ДізайнФайлу ВзятиФайл(ОписФайла описФайла)
     {
         return ЛентаВводу.Файли.FirstOrDefault(_ => _.НазваФайлу == описФайла.НазваФайла) ?? throw new InvalidOperationException($"File {описФайла.НазваФайла} does not exists. Probably compilation was wrong."); ;
-    }
-
-    private void ПрочитатиФайл(ДізайнФайлу ф, ОписФайла описФайла)
-    {
-        var серво = ВзятиСервоПривід(описФайла.КодФайла);
-        var елемент = серво.Прочитати(ф.ДізайнЕлементів.РозмірЕлемента);
-        ФайловіБуфери[описФайла.КодФайла] = елемент;
     }
 
     private void ПідготуватиВхід(Input input)
