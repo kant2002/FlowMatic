@@ -15,7 +15,7 @@ namespace FlowMatic
             var префікс = $"({номерРядка}) ";
             if (!код.StartsWith(префікс))
             {
-                throw new InvalidOperationException("Invalid line number.");
+                throw new InvalidOperationException($"Invalid line number. Have code {код}, expected line number {номерРядка}");
             }
 
             код = код[префікс.Length..];

@@ -8,10 +8,8 @@
     {
         @foreach (var поля in ДізайнФайлу.ДізайнПолей.Поля)
         {
-            var x = i;
-            Console.WriteLine(i);
             var чанк = Чанки[i];
-            <РедакторПоля @bind-Зміст="чанк" ОписПоля="поля" @bind-Зміст:after="ЧанкОновлено2(x, чанк)" />
+            <РедакторПоля @bind-Зміст="чанк" ОписПоля="поля" @bind-Зміст:after="ЧанкОновлено(i, чанк)" />
         }
     }
 }
@@ -22,7 +20,14 @@
     [Parameter]
     public required string Зміст
     {
-        get => string.Join("", Чанки);
+        get
+        {
+            var результат =  string.Join("", Чанки);
+            return результат.Length < ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12
+                ? результат + new string(' ', ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12 - результат.Length)
+            : результат;
+        }
+
         set
         {
             Чанки = value.Chunk(ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12).Select(x => new string(x)).ToArray();
@@ -42,21 +47,12 @@
         Зміст += new string(' ', ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12);
     }
 
-    private async Task ЧанкОновлено(int i, string чанк)
-    {
-        Console.WriteLine($"Чанки[{i}]= '{чанк}', Зміст файлу '{Зміст}'");
-        Чанки[i] = чанк;
-        Console.WriteLine($"Чанки[{i}]= '{чанк}', Зміст файлу '{Зміст}'");
-        await ЗмістChanged.InvokeAsync(Зміст);
-    }
-    private Func<Task> ЧанкОновлено2(int i, string чанк)
+    private Func<Task> ЧанкОновлено(int i, string чанк)
     {
         var x = i;
         return async () =>
         {
-            Console.WriteLine($"Чанки[{x}]= '{чанк}', Зміст файлу '{Зміст}'");
             Чанки[x] = чанк;
-            Console.WriteLine($"Чанки[{x}]= '{чанк}', Зміст файлу '{Зміст}'");
             await ЗмістChanged.InvokeAsync(Зміст);
         };
     }

@@ -3,7 +3,7 @@
 public class СервоПривід
 {
     private int позиція;
-    private string дані;
+    private string? дані;
     public string Назва { get; private set; }
     public bool КінецьДаних;
     public void ВставитиЛенту(Лента дані)
@@ -22,9 +22,14 @@ public class СервоПривід
             КінецьДаних = true;
             return "";
         }
+
         if (this.позиція + кількість >= this.дані.Length)
         {
             КінецьДаних = true;
+        }
+
+        if (this.позиція + кількість > this.дані.Length)
+        {
             return "";
         }
 
@@ -42,5 +47,12 @@ public class СервоПривід
     {
         this.позиція = 0;
         КінецьДаних = false;
+    }
+
+    public void ВитягнутиЛенту()
+    {
+        позиція = 0;
+        дані = null;
+        КінецьДаних = true;
     }
 }

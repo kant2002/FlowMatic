@@ -34,7 +34,7 @@
     {
         var п = ВіртуальнаМашина.СервоПривіди[i];
         <div class="col-3">
-            <select>
+            <select @oninput="ЛентаВибрана(п)">
                 <option value="">-- Empty --</option>
                 @foreach (var лента in бібліотекаЛент.Ленти)
                 {
@@ -125,5 +125,28 @@
     void Скомпілювати()
     {
         ВіртуальнаМашина.СкомпілюватиПрограму(ЛентаВводу);
+    }
+
+    public Func<ChangeEventArgs, Task> ЛентаВибрана(СервоПривід? привід)
+    {
+        return (ChangeEventArgs args) =>
+        {
+            if (привід is null)
+            {
+                return Task.CompletedTask;
+            }
+
+            var лента = бібліотекаЛент.Ленти.FirstOrDefault(_ => _.Назва == (string?)args.Value);
+            if (лента is not null)
+            {
+                привід.ВставитиЛенту(лента);
+            }
+            else
+            {
+                привід.ВитягнутиЛенту();
+            }
+
+            return Task.CompletedTask;
+        };
     }
 }
