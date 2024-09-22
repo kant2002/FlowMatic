@@ -1,3 +1,3 @@
 ﻿namespace FlowMatic;
 
-public record Лента(string Назва, string Зміст);
+public record Лента(string Назва, string ШаблонДизайну, string Зміст);
