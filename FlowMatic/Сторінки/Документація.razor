@@ -20,3 +20,300 @@
     <li><a href="https://zonadepruebas.com/viewtopic.php?t=4533">FLOW-MATIC Interpreter (in Spanish)</a></li>
     <li><a href="http://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf">FLOW-MATIC manual (1958)</a></li>
 </ul>
+
+<h2>FLOW-MATIC LIBRARY ROUTINES</h2>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>CLOSE-OUT</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) CLOSE-OUT [FILE|FILES] f1 [f2 f3 ... fn ].</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-12">
+        <b>COMPARE</b>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 1
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) COMPARE field-name (f1) WITH field-name (f2) ; IF EQUAL GO TO OPERATION h1 ; OTHERWISE GO TO OPERATION h2 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 2
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) COMPARE field-name (f1) WITH field-name (f2) ; IF GREATER GO TO OPERATION h1 ; OTHERWISE GO TO OPERATION h2 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 3
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) COMPARE field-name (f1) WITH field-name (f2) ; IF EQUAL GO TO OPERATION h1 ; IF GREATER GO TO OPERATION h2 ; OTHERWISE GO TO OPERATION h3 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 4
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) COMPARE field-name (f1) WITH field-name (f2) ; IF GREATER GO TO OPERATION h1 ; IF EQUAL GO TO OPERATION h2 ; OTHERWISE GO TO OPERATION h3 .</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>EXECUTE</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) EXECUTE OPERATION h1 [THROUGH OPERATION h2 ].</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>INPUT</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+<pre>(0) INPUT name-of-file FILE f1 [SERVO s1 |SERVOS s1 , s2 ]
+          name-of-file FILE f2 [SERVO s1 |SERVOS s1 , s2 ]
+          ...
+ ; OUTPUT name-of-file FILE f3 [SERVO s1 |SERVOS s1 , s2 ]
+          name-of-file FILE f4 [SERVO s1 |SERVOS s1 , s2 ]
+          ...
+[; PRESELECTION ]
+[; HSP f1 , f2 , ... fn ]
+[; T/C f1 , f2 , ... fn ]
+[; RERUN [ON|WITH|FROM] OUTPUT f1 ].</pre>
+    </div>
+</div>
+
+<p class="text-center">Special Notes</p>
+
+<ol type="1">
+    <li>The assigned file-name may not begin with the digits FILE-. </li>
+    <li>If servo numbers are not specified, the iompiler will assign them, reserving the proper servos for tapes for HSP or T/C, as stated.</li>
+    <li>
+        For a single input file, continuous reads will be provided. For two or
+        three, way input, standby coding will be provided, unless preselection is
+        specified. Up to.eight way input coding will be provided in the prese
+        lection option, and up to five full-word keys may be used.
+    </li>
+    <li>
+        The normal and error print-outs which may occur in the execution of this
+        coding are self-explanatory. In addition, breakpoint 1 is used throughout 
+        the coding to provide operating options. For example, if a tape label 
+        fails the check, an error print-out gives this information to the
+        operator; he may then force transfer on breakpoint 1 to proceed, if desired.
+        In all cases where it is desired to bypass the error, the action
+        is to force transfer on breakpoint 1.
+    </li>
+    <li>
+        If it is desired to begin the problem over, the operating instructions are:
+        <ol type="a">
+            <li>- Rewind all tapes except the instruction tape.</li>
+            <li>- Clear C and rI.</li>
+            <li>- No transfer on Breakpoint 2.</li>
+        </ol>
+        This coding is always provided.
+    </li>
+    <li>
+        If rerun coding has been requested, the operating instructions are:
+        <ol type="a">
+            <li>- Rewind all tapes except the instruction tape.</li>
+            <li>- Clear C and rI.</li>
+            <li>- Force transfer on Breakpoint 2.</li>
+        </ol>
+        The problem will be resumed from the last completed output reel, as
+        specified in the input statement.
+    </li>
+</ol>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>JUMP</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) JUMP TO OPERATION h1 .</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>MOVE</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+<pre>(h) MOVE <i>field-name</i> (f1) TO <i>field-name</i> (f2) 
+                         [, <i>field-name</i> (f3) 
+                         ...
+                         , <i>field-name</i> (fn) ]
+[; <i>field-name</i> (f'1) TO <i>field-name</i> (f'2) 
+                         [, <i>field-name</i> (f'3) 
+                         ...
+                         , <i>field-name</i> (f'n) ]].</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>READ-ITEM</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) READ-ITEM f1 [; IF END OF DATA GO TO OPERATION h1 ].</pre>
+    </div>
+</div>
+
+<p class="text-center">Special Notes</p>
+
+<ol type="1">
+    <li>
+        Each input file mentioned in the INPUT statement must have at least one
+        READ-ITEM operation.
+    </li>
+    <li>
+        At least one READ-ITEM operation, for each input file, must include the
+        optional phrase, IF END OF DATA ..... .
+    </li>
+    <li>
+        If two or more READ-ITEM operations, for a single input file, include the
+        IF END OF DATA ...... option, the operation numbers, h1 must be identical.
+    </li>
+</ol>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>REWIND</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) REWIND f1 [, f2 , f3 ,.... fn ].</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>SET</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+<pre>(h) SET OPERATION h1 GO TO OPERATION h2 
+     [, OPERATION h3 GO TO OPERATION h4 
+     ...
+     , OPERATION h5 GO TO OPERATION h6 ].</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>STOP</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) STOP . (END)</pre>
+    </div>
+</div>
+
+<p class="text-center">Special Notes</p>
+
+<ol type="1">
+    <li>
+        The stop operation must be. the highest numbered operation in the problem,
+        and it must be followed by the word END in parentheses.
+    </li>
+</ol>
+
+<div class="row">
+    <div class="col col-md-12">
+        <b>TEST</b>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 1
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TEST field-name (f1) AGAINST field-name (f2) 
+; IF GREATER GO TO OPERATION h1 
+; IF EQUAL GO TO OPERATION h2 
+[; AGAINST ... ]
+; OTHERWISE GO TO OPERATION h3 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 2
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TEST field-name (f1) AGAINST field-name (f2) 
+; IF GREATER GO TO OPERATION h1 
+; IF LESS GO TO OPERATION h2 
+[; AGAINST ... ]
+; OTHERWISE GO TO OPERATION h3 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 3
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TEST field-name (f1) AGAINST field-name (f2) 
+; IF UNEQUAL GO TO OPERATION h1 
+[; AGAINST ... ]
+; OTHERWISE GO TO OPERATION h2 .</pre>
+    </div>
+</div>
+
+<p class="text-center">Special Notes</p>
+
+<ol type="1">
+    <li>
+        The conditional phrases, IF GREATER, IF EQUAL, IF LESS, shown in Option 1
+        and 2 may appear singly or in any order in combinations of two. The
+        phrase OTHERWISE must always appear, and must be written last.
+    </li>
+    <li>
+        If it is desired to use a test value of spaces or per~pos, the words
+        SPACE, PERIOD, SPACES, or PERIODS should be used instead of the actual
+        digits. In these cases, only one test value is acceptable. In all other
+        cases, tests against many test values may be made in one operation.
+    </li>
+</ol>
+
+<div class="row">
+    <div class="col col-md-12">
+        <b>TRANSFER</b>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 1
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TRANSFER f1 TO f2 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 2
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TRANSFER sub-item-name IN f1 TO f2 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 3
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TRANSFER f1 TO sub-item-name IN f2 .</pre>
+    </div>
+    <div class="col col-md-2 col-lg-1">
+        Option 4
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) TRANSFER sub-item-name IN f1 TO sub-item-name IN f2 .</pre>
+    </div>
+</div>
+
+<p class="text-center">Special Notes</p>
+
+<ol type="1">
+    <li>
+        Item or sub-item sizes in f1 and f2 must be equal in size.
+    </li>
+</ol>
+
+<div class="row">
+    <div class="col col-md-2 col-lg-1">
+        <b>WRITE-ITEM</b>
+    </div>
+    <div class="col col-md-10 col-lg-11">
+        <pre>(h) WRITE-ITEM f1 .</pre>
+    </div>
+</div>
