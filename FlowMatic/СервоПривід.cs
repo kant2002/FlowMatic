@@ -34,6 +34,7 @@ public class СервоПривід
         }
 
         кількість = Math.Min(this.дані.Length - 1, this.позиція + кількість);
+        this.позиція += кількість;
         return дані.Substring(this.позиція, кількість);
     }
 

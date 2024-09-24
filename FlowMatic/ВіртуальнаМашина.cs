@@ -1,5 +1,6 @@
 ﻿using FlowMatic.Операції;
 using FlowMatic.Юнівак;
+using Система.ВВ;
 using static FlowMatic.Операції.Input;
 
 namespace FlowMatic;
@@ -18,22 +19,25 @@ public class ВіртуальнаМашина
         return СервоПривідиСловник[файл].ПоточнийПривід;
     }
 
-    private int позиція;
     public bool ФлагОстанова {  get; private set; }
+    public string Ошибка { get; private set; }
     private Програма програма;
     public ЛентаВводу ЛентаВводу { get; private set; }
+    public int Позиція { get; private set; }
+
     public void СкомпілюватиПрограму(ЛентаВводу лентаВводу)
     {
         var компілятор = new Компілятор();
         програма = компілятор.Скомпілювати(лентаВводу.ІсходнийКод);
         this.ЛентаВводу = лентаВводу;
         ПідготуватиВхід((Input)програма.Операції[0]);
-        позиція = 0;
+        Позиція = 0;
 
     }
     public void ВиконатиПрограму()
     {
-        позиція = 0;
+        Ошибка = "";
+        Позиція = 0;
         while (true)
         {
             ВиконатиРядокПрограми();
@@ -43,8 +47,9 @@ public class ВіртуальнаМашина
     }
     public void ВиконатиРядокПрограми()
     {
+        Ошибка = "";
         ФлагОстанова = false;
-        var поточнаКоманда = програма.Операції[позиція];
+        var поточнаКоманда = програма.Операції[Позиція];
         switch (поточнаКоманда)
         {
             case Input input:
@@ -53,14 +58,24 @@ public class ВіртуальнаМашина
             case Compare compare:
                 ВиконатиCompare(compare);
                 break;
+            case ReadItem readItem:
+                ВиконатиReadItem(readItem);
+                break;
+            case SetOperation setOperation:
+                ВиконатиSetOperation(setOperation);
+                break;
+            case Jump jump:
+                ВиконатиJump(jump);
+                break;
+            case Test jump:
+                ВиконатиTest(jump);
+                break;
             case Stop:
+                ФлагОстанова = true;
                 return;
             default:
-                throw new NotSupportedException($"Not supported command {поточнаКоманда} with index {позиція}");
+                throw new NotSupportedException($"Not supported command {поточнаКоманда} with index {Позиція}");
         }
-
-        if (!ФлагОстанова)
-        позиція++;
     }
 
     private void ВиконатиInput(Input input)
@@ -71,12 +86,18 @@ public class ВіртуальнаМашина
             var серво = ВзятиСервоПривід(описФайла.КодФайла);
             if (!серво.ЛентаВставлена)
             {
+                Ошибка = "Лента для приводу із кодом " + описФайла.КодФайла + " не визначена";
                 ФлагОстанова = true;
                 break;
             }
 
             var елемент = серво.Прочитати(ф.ДізайнЕлементів.РозмірЕлемента * 12);
             ФайловіБуфери[описФайла.КодФайла] = елемент;
+        }
+
+        if (!ФлагОстанова)
+        {
+            Позиція++;
         }
     }
 
@@ -132,7 +153,107 @@ public class ВіртуальнаМашина
 
     private void ВиконатиCompare(Compare compare)
     {
-        throw new NotImplementedException();
+        var першийБуфер = ФайловіБуфери[compare.Перший.Файл];
+        var другийБуфер = ФайловіБуфери[compare.Другий.Файл];
+        var першийДізайн = СервоПривідиСловник[compare.Перший.Файл].ДізайнФайлу;
+        var другийДізайн = СервоПривідиСловник[compare.Другий.Файл].ДізайнФайлу;
+        var першеПоле = ВзятиПоле(першийДізайн, compare.Перший.Поле, першийБуфер);
+        var другеПоле = ВзятиПоле(другийДізайн, compare.Другий.Поле, другийБуфер);
+        var порівняти = першеПоле.CompareTo(другеПоле);
+        if (порівняти == 0 && compare.Рівно is not null)
+        {
+            Позиція = compare.Рівно.Value;
+            return;
+        }
+
+        if (порівняти > 0 && compare.Більше is not null)
+        {
+            Позиція = compare.Більше.Value;
+            return;
+        }
+
+        Позиція = compare.Інакше;
+    }
+
+    private void ВиконатиReadItem(ReadItem readItem)
+    {
+        var резервація = СервоПривідиСловник[readItem.Файл];
+        var серво = резервація.Привід;
+        if (серво.КінецьДаних)
+        {
+            if (readItem.Кінець == null)
+            {
+                Ошибка = $"Reel is empty for file {readItem.Файл}.";
+                ФлагОстанова = true;
+                return;
+            }
+
+            Позиція = readItem.Кінець.Value;
+            return;
+        }
+
+        var елемент = серво.Прочитати(резервація.ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента * 12);
+        ФайловіБуфери[readItem.Файл] = елемент;
+        if (елемент.Substring(0, резервація.ДізайнФайлу.МаркерКінцяФайла.Length) == резервація.ДізайнФайлу.МаркерКінцяФайла)
+        {
+            серво.КінецьДаних = true;
+        }
+
+        Позиція++;
+    }
+
+    private void ВиконатиSetOperation(SetOperation setOperation)
+    {
+        програма.Операції[setOperation.Операція] = new Jump(setOperation.НоваОперація);
+        Позиція++;
+    }
+
+    private void ВиконатиJump(Jump jump)
+    {
+        Позиція = jump.Операція;
+    }
+
+    private void ВиконатиTest(Test test)
+    {
+        var першийБуфер = ФайловіБуфери[test.Поле.Файл];
+        var першийДізайн = СервоПривідиСловник[test.Поле.Файл].ДізайнФайлу;
+        var першеПоле = ВзятиПоле(першийДізайн, test.Поле.Поле, першийБуфер);
+        foreach(var (значення, більше, рівно, менше, неРівне, інакше) in test.Порівняння)
+        {
+            var порівняти = першеПоле.CompareTo(значення);
+            if (порівняти == 0 && рівно is not null)
+            {
+                Позиція = рівно.Value;
+                return;
+            }
+
+            if (порівняти > 0 && більше is not null)
+            {
+                Позиція = більше.Value;
+                return;
+            }
+
+            if (порівняти < 0 && менше is not null)
+            {
+                Позиція = менше.Value;
+                return;
+            }
+
+            if (порівняти != 0 && неРівне is not null)
+            {
+                Позиція = неРівне.Value;
+                return;
+            }
+
+            Позиція = інакше;
+        }
+    }
+
+    private string ВзятиПоле(ДізайнФайлу дізайн, string назваПоля, string буфер)
+    {
+        var дізайнПолей = дізайн.ДізайнПолей ?? throw new InvalidDataException($"The reel does not have field design specified");
+        var поле = дізайнПолей.Поля.FirstOrDefault(_ => _.Назва == назваПоля) ?? throw new InvalidDataException($"The reel does not have field {назваПоля}");
+        return буфер.Substring(поле.Місце * 12 + поле.ПозіціяНайлівішогоСимвола, поле.КількістьСимволів);
     }
 
     public class РезерваціяПривіда
