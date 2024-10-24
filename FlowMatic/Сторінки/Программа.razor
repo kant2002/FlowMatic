@@ -11,6 +11,7 @@
 </h1>
 
 <button type="button" class="btn btn-secondary" @onclick="Приклад1">Sample 1</button>
+<button type="button" class="btn btn-secondary" @onclick="Приклад2">Sample 2</button>
 <button type="button" class="btn btn-secondary" @onclick="Скомпілювати">Compile</button>
 <button type="button" class="btn btn-primary" @onclick="Запустити">Run</button>
 <button type="button" class="btn btn-primary" @onclick="Крок">Step</button>
@@ -52,10 +53,15 @@
                 var ф = резервації[j];
                 if (ф.АлокованіПриводи.Contains(i + 1))
                 {
-                    @ф.ДізайнФайлу.НазваФайлу
-                    <text> (item size: </text>
-                    @ф.ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента
-                    <text>)</text>
+                    if (ф.ВхідніДані)
+                    {
+                        @ІнформаціяРезерваціїФайлу(ф)
+                    }
+                    else
+                    {
+                        <i>@ІнформаціяРезерваціїФайлу(ф)</i>
+                    }
+                    
                 }
             }
 
@@ -73,7 +79,14 @@
 <pre>
 @foreach (var ф in ВіртуальнаМашина.РезерваціяПривідів)
 {
-    @ф.ДізайнФайлу.НазваФайлу <text> - </text> @string.Join(", ", ф.АлокованіПриводи)
+    if (ф.ВхідніДані)
+    {
+        @ІнформаціяРезервації(ф)
+    }
+    else
+    {
+        <i>@ІнформаціяРезервації(ф)</i>
+    }
     <br/>
 }
 </pre>
@@ -93,6 +106,17 @@
 }
 
 @code {
+    private RenderFragment<ВіртуальнаМашина.РезерваціяПривіда> ІнформаціяРезервації = ф =>
+        @<text>@ф.ДізайнФайлу.НазваФайлу <text> - </text> @string.Join(", ", ф.АлокованіПриводи)</text>;
+
+    private RenderFragment<ВіртуальнаМашина.РезерваціяПривіда> ІнформаціяРезерваціїФайлу = ф =>
+    @<text>
+        @ф.ДізайнФайлу.НазваФайлу
+        <text> (item size: </text>
+        @ф.ДізайнФайлу.ДізайнЕлементів.РозмірЕлемента
+        <text>)</text>
+    </text>;
+
     private string ісходнийКод;
 
     public string ІсходнийКод
@@ -115,6 +139,11 @@
     void Приклад1()
     {
         ЛентаВводу = Приклади.Приклад1;
+    }
+
+    void Приклад2()
+    {
+        ЛентаВводу = Приклади.Приклад2;
     }
 
     void Запустити()
