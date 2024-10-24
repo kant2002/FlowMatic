@@ -58,21 +58,30 @@ public class ВіртуальнаМашина
             case Compare compare:
                 ВиконатиCompare(compare);
                 break;
+            case Jump jump:
+                ВиконатиJump(jump);
+                break;
+            case Move move:
+                ВиконатиMove(move);
+                break;
             case ReadItem readItem:
                 ВиконатиReadItem(readItem);
                 break;
             case SetOperation setOperation:
                 ВиконатиSetOperation(setOperation);
                 break;
-            case Jump jump:
-                ВиконатиJump(jump);
-                break;
-            case Test jump:
-                ВиконатиTest(jump);
-                break;
             case Stop:
                 ФлагОстанова = true;
                 return;
+            case Test jump:
+                ВиконатиTest(jump);
+                break;
+            case Transfer transfer:
+                ВиконатиTransfer(transfer);
+                break;
+            case WriteItem writeItem:
+                ВиконатиWriteItem(writeItem);
+                break;
             default:
                 throw new NotSupportedException($"Not supported command {поточнаКоманда} with index {Позиція}");
         }
@@ -247,6 +256,54 @@ public class ВіртуальнаМашина
 
             Позиція = інакше;
         }
+    }
+
+    private void ВиконатиTransfer(Transfer transfer)
+    {
+        ФайловіБуфери[transfer.ЦільовийФайл] = ФайловіБуфери[transfer.ІсходнийФайл];
+        Позиція++;
+    }
+
+    private void ВиконатиMove(Move move)
+    {
+        foreach (var (ІсходнеПоле, ЦільовіПоля) in move.ОписПереміщення)
+        {
+            var значення = ВзятиПоле(ІсходнеПоле.Поле, ІсходнеПоле.Файл);
+            foreach (var ціль in ЦільовіПоля)
+            {
+                ВстановитиПоле(ІсходнеПоле.Поле, ІсходнеПоле.Файл, значення);
+            }
+        }
+
+        Позиція++;
+    }
+
+    private void ВиконатиWriteItem(WriteItem writeItem)
+    {
+        var буфер = ФайловіБуфери[writeItem.Файл];
+        var резервація = СервоПривідиСловник[writeItem.Файл];
+        var серво = резервація.Привід;
+        серво.Записати(буфер);
+        Позиція++;
+    }
+
+    private void ВстановитиПоле(string назваПоля, char файл, string значення)
+    {
+        var буфер = ФайловіБуфери[файл];
+        var дізайн = СервоПривідиСловник[файл].ДізайнФайлу;
+        var дізайнПолей = дізайн.ДізайнПолей ?? throw new InvalidDataException($"The reel does not have field design specified");
+        var поле = дізайнПолей.Поля.FirstOrDefault(_ => _.Назва == назваПоля) ?? throw new InvalidDataException($"The reel does not have field {назваПоля}");
+        string новеЗначення = буфер.Substring(0, поле.Місце * 12 + поле.ПозіціяНайлівішогоСимвола) + значення + буфер.Substring(поле.Місце * 12 + поле.ПозіціяНайлівішогоСимвола + поле.КількістьСимволів);
+        ФайловіБуфери[файл] = новеЗначення;
+    }
+
+    private string ВзятиПоле(string назваПоля, char файл)
+    {
+        var буфер = ФайловіБуфери[файл];
+        var дізайн = СервоПривідиСловник[файл].ДізайнФайлу;
+        var дізайнПолей = дізайн.ДізайнПолей ?? throw new InvalidDataException($"The reel does not have field design specified");
+        var поле = дізайнПолей.Поля.FirstOrDefault(_ => _.Назва == назваПоля) ?? throw new InvalidDataException($"The reel does not have field {назваПоля}");
+        return буфер.Substring(поле.Місце * 12 + поле.ПозіціяНайлівішогоСимвола, поле.КількістьСимволів);
     }
 
     private string ВзятиПоле(ДізайнФайлу дізайн, string назваПоля, string буфер)
