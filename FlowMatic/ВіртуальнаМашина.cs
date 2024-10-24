@@ -13,6 +13,7 @@ public class ВіртуальнаМашина
     public IEnumerable<РезерваціяПривіда> РезерваціяПривідів => СервоПривідиСловник.Values;
     private Dictionary<char, РезерваціяПривіда> СервоПривідиСловник = new ();
     private Dictionary<char, string> ФайловіБуфери = new ();
+    public Action<Лента>? ЛентаВитягнута;
 
     public СервоПривід ВзятиСервоПривід(char файл)
     {
@@ -81,6 +82,9 @@ public class ВіртуальнаМашина
                 break;
             case WriteItem writeItem:
                 ВиконатиWriteItem(writeItem);
+                break;
+            case CloseOut closeOut:
+                ВиконатиCloseOut(closeOut);
                 break;
             default:
                 throw new NotSupportedException($"Not supported command {поточнаКоманда} with index {Позиція}");
@@ -284,6 +288,21 @@ public class ВіртуальнаМашина
         var резервація = СервоПривідиСловник[writeItem.Файл];
         var серво = резервація.Привід;
         серво.Записати(буфер);
+        Позиція++;
+    }
+
+    private void ВиконатиCloseOut(CloseOut closeOut)
+    {
+        foreach (var файл in closeOut.Файли)
+        {
+            var буфер = ФайловіБуфери[файл];
+            var резервація = СервоПривідиСловник[файл];
+            var серво = резервація.Привід;
+            серво.Записати(резервація.ДізайнФайлу.МаркерКінцяФайла);
+            var лента = резервація.ПоточнийПривід.ВитягнутиЛенту();
+            ЛентаВитягнута?.Invoke(лента);
+        }    
+        
         Позиція++;
     }
 

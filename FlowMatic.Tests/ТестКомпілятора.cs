@@ -20,6 +20,21 @@ public class ТестКомпілятора
     }
 
     [Fact]
+    public void InputПарсінг2()
+    {
+        var к = new Компілятор();
+        var код = "(0) INPUT INVENTORY FILE-A PRICE FILE-B ; OUTPUT PRICED-INV FILE-C UNPRICED-INV FILE-D  .";
+
+        var програма = к.Скомпілювати(код);
+
+        var операція = програма.Операції[0];
+        var input = Assert.IsType<Input>(операція);
+        Assert.Equal([new("INVENTORY", 'A', []), new("PRICE", 'B', [])], input.ВхідніФайли);
+        Assert.Equal([new("PRICED-INV", 'C', []), new("UNPRICED-INV", 'D', [])], input.ВихідніФайли);
+        Assert.Equal(Array.Empty<char>(), input.ВисокошвидкосніПрінтери);
+    }
+
+    [Fact]
     public void CompareПарсінг()
     {
         var к = new Компілятор();

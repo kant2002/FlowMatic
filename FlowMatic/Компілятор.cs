@@ -62,12 +62,13 @@ namespace FlowMatic
         {
             var частини = код.Split(" ; ");
             var вхідні = РозібратиОписФайла(частини[0]);
-            var вихідні = РозібратиОписФайла(частини[1][("OUTPUT ".Length)..]);
+            var вихідні = РозібратиОписФайла(частини[1][("OUTPUT ".Length)..].TrimEnd());
             var високошвидкісні = Array.Empty<char>();
-            if (частини.Length >= 2 && частини[2].StartsWith("HSP "))
+            if (частини.Length > 2 && частини[2].StartsWith("HSP "))
             {
                 високошвидкісні = частини[2]["HSP ".Length..].Split(",").Select(_ => _[0]).ToArray();
             }
+
             return new Input()
             {
                 ВхідніФайли = вхідні,

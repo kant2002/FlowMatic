@@ -4,10 +4,12 @@ public class СервоПривід
 {
     private int позиція;
     private string? дані;
+    private Лента лента;
     public string Назва { get; private set; }
     public bool КінецьДаних;
     public void ВставитиЛенту(Лента дані)
     {
+        this.лента = дані;
         this.дані = дані.Зміст;
         this.Назва = дані.Назва;
         this.позиція = 0;
@@ -34,8 +36,9 @@ public class СервоПривід
         }
 
         кількість = Math.Min(this.дані.Length - 1, this.позиція + кількість);
+        var результат = дані.Substring(this.позиція, кількість);
         this.позиція += кількість;
-        return дані.Substring(this.позиція, кількість);
+        return результат;
     }
 
     public void Записати(string дані)
@@ -50,10 +53,12 @@ public class СервоПривід
         КінецьДаних = false;
     }
 
-    public void ВитягнутиЛенту()
+    public Лента ВитягнутиЛенту()
     {
+        var результат = this.лента with { Зміст = дані };
         позиція = 0;
         дані = null;
         КінецьДаних = true;
+        return результат;
     }
 }
