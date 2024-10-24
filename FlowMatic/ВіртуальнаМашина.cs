@@ -62,6 +62,9 @@ public class ВіртуальнаМашина
             case Jump jump:
                 ВиконатиJump(jump);
                 break;
+            case Rewind rewind:
+                ВиконатиRewind(rewind);
+                break;
             case Move move:
                 ВиконатиMove(move);
                 break;
@@ -231,6 +234,21 @@ public class ВіртуальнаМашина
         Позиція = jump.Операція;
     }
 
+    private void ВиконатиRewind(Rewind rewind)
+    {
+        foreach (var файл in rewind.Файли)
+        {
+            var резервація = СервоПривідиСловник[файл];
+            резервація.Привід.Відмотати();
+            if (резервація.Привід2 is not null)
+            {
+                резервація.Привід2.Відмотати();
+            }
+        }
+
+        Позиція++;
+    }
+
     private void ВиконатиTest(Test test)
     {
         var першийБуфер = ФайловіБуфери[test.Поле.Файл];
@@ -300,7 +318,6 @@ public class ВіртуальнаМашина
     {
         foreach (var файл in closeOut.Файли)
         {
-            var буфер = ФайловіБуфери[файл];
             var резервація = СервоПривідиСловник[файл];
             var серво = резервація.Привід;
             серво.Записати(резервація.ДізайнФайлу.МаркерКінцяФайла);
