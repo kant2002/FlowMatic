@@ -19,7 +19,7 @@ public class СервоПривід
 
     public string Прочитати(int кількість)
     {
-        if (дані is null)
+        if (дані is null || КінецьДаних)
         {
             КінецьДаних = true;
             return "";
@@ -36,7 +36,7 @@ public class СервоПривід
         }
 
         кількість = Math.Min(this.дані.Length - 1, this.позиція + кількість);
-        var результат = дані.Substring(this.позиція, кількість);
+        var результат = дані.Substring(this.позиція, кількість - this.позиція);
         this.позиція += кількість;
         return результат;
     }
