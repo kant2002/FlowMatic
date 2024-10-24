@@ -172,9 +172,9 @@ public class ТестКомпілятора
 
         var операція = програма.Операції[0];
         var input = Assert.IsType<Move>(операція);
-        Assert.Equal(1, input.ОписПереміщення.Length);
-        Assert.Equal(new ПосиланняНаПоле("UNIT-PRICE", 'B'), input.ОписПереміщення[0].ІсходнеПоле);
-        Assert.Equal([new("UNIT-PRICE", 'C')], input.ОписПереміщення[0].ЦільовіПоля);
+        var описПереміщення = Assert.Single(input.ОписПереміщення);
+        Assert.Equal(new ПосиланняНаПоле("UNIT-PRICE", 'B'), описПереміщення.ІсходнеПоле);
+        Assert.Equal([new("UNIT-PRICE", 'C')], описПереміщення.ЦільовіПоля);
     }
 
     [Fact]
