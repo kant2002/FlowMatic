@@ -52,6 +52,23 @@ public class ТестКомпілятора
     }
 
     [Fact]
+    public void CompareПарсінг2()
+    {
+        var к = new Компілятор();
+        var код = "(0) COMPARE PRODUCT-NO (A) WITH PRODUCT-NO (W) ; IF EQUAL GO TO OPERATION 11 ; OTHERWISE GO TO OPERATION 1 .";
+
+        var програма = к.Скомпілювати(код);
+
+        var операція = програма.Операції[0];
+        var input = Assert.IsType<Compare>(операція);
+        Assert.Equal(new("PRODUCT-NO", 'A'), input.Перший);
+        Assert.Equal(new("PRODUCT-NO", 'W'), input.Другий);
+        Assert.Null(input.Більше);
+        Assert.Equal((ushort)11, input.Рівно);
+        Assert.Equal((ushort)1, input.Інакше);
+    }
+
+    [Fact]
     public void TransferПарсінг()
     {
         var к = new Компілятор();
