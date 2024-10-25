@@ -6,7 +6,7 @@ List of operations.
 | --------- | ------ | ------ | ------ |
 | ADD       | :question:            |  :white_large_square: | :white_large_square: |
 | CLOSE-OUT | :white_check_mark:    |  :white_check_mark: | :white_check_mark: |
-| COMPARE   | :white_check_mark:    |  :white_large_square: | :white_large_square: |
+| COMPARE   | :white_check_mark:    |  :white_check_mark: | :white_check_mark: |
 | COUNT     | :white_large_square:  |  :white_large_square: | :white_large_square: |
 | DIVIDE    | :question:            |  :white_large_square: | :white_large_square: |
 | EXECUTE   | :white_check_mark:    |  :white_large_square: | :white_large_square: |
@@ -16,7 +16,7 @@ List of operations.
 | INPUT     | :white_check_mark:    |  :white_large_square: | :white_large_square: |
 | INSERT    | :white_large_square:  |  :white_large_square: | :white_large_square: |
 | JUMP      | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
-| MOVE      | :white_check_mark: |  :white_large_square: | :white_large_square: |
+| MOVE      | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
 | MULTIPLY  | :question:            |  :white_large_square: | :white_large_square: |
 | OUTPUT    | :white_large_square: |  :white_large_square: | :white_large_square: |
 | OVERLAY   | :white_large_square: |  :white_large_square: | :white_large_square: |
@@ -27,7 +27,7 @@ List of operations.
 | REWIND    | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
 | SELECT    | :white_large_square: |  :white_large_square: | :white_large_square: |
 | SELECT-LEAST | :question:         |  :white_large_square: | :white_large_square: |
-| SET      | :white_check_mark: |  :white_large_square: | :white_large_square: |
+| SET      | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
 | STOP      | :white_check_mark: |  :white_check_mark: | :white_check_mark: |
 | SUBTRACT  | :question: |  :white_large_square: | :white_large_square: |
 | SWITCH    | :white_large_square: |  :white_large_square: | :white_large_square: |
