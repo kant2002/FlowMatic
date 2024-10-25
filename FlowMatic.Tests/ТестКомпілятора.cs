@@ -183,6 +183,19 @@ public class ТестКомпілятора
     }
 
     [Fact]
+    public void CloseOutПарсінг2()
+    {
+        var к = new Компілятор();
+        var код = "(0) CLOSE-OUT FILE C .";
+
+        var програма = к.Скомпілювати(код);
+
+        var операція = програма.Операції[0];
+        var input = Assert.IsType<CloseOut>(операція);
+        Assert.Equal(new char[] { 'C' }, input.Файли);
+    }
+
+    [Fact]
     public void StopПарсінг()
     {
         var к = new Компілятор();
