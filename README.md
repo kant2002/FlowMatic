@@ -39,11 +39,13 @@ List of operations.
 
 - :white_large_square: No documentation available
 - :question: Partial documentation available. We have two not trusted sources
-- :white_check_mark: Documentation from authoritative source obtained
+- :white_check_mark: Documentation from authoritative source obtained[^1]
 
 ## References
 
+[^1]: http://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf
+- https://zonadepruebas.com/viewtopic.php?t=4533
 - https://doi.org/10.1016/0066-4138(60)90042-2
 - https://doi.org/10.1109/MAHC.2004.34
-- https://zonadepruebas.com/viewtopic.php?t=4533
-- http://bitsavers.trailing-edge.com/pdf/univac/flow-matic/U1518_FLOW-MATIC_Programming_System_1958.pdf
+
+Really would like to search for `“Report on B-0 Compiler System,” 19 Feb. 1957, box 268, Sperry Univac Archives.`
